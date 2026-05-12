@@ -1,0 +1,126 @@
+[build-system]
+requires      = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yoktez"
+version = "0.1.0"
+description = "Typed Python client for the National Thesis Center of Turkey."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Efe Özyay", email = "hi@efe.cv" }]
+keywords = ["yoktez", "tez", "thesis", "turkey"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Natural Language :: Turkish",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = ["httpx>=0.28,<1", "beautifulsoup4>=4.12,<5", "lxml>=5.3,<7"]
+
+[project.urls]
+homepage = "https://github.com/ozefe/yoktez"
+source   = "https://github.com/ozefe/yoktez"
+issues   = "https://github.com/ozefe/yoktez/issues"
+
+[dependency-groups]
+test = ["pytest>=8.3", "pytest-cov>=6"]
+lint = ["ruff>=0.8"]
+typing = ["pyright>=1.1.390"]
+dev = [
+    { include-group = "test" },
+    { include-group = "lint" },
+    { include-group = "typing" },
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yoktez"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/yoktez", "tests", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths  = ["tests"]
+pythonpath = ["src"]
+addopts    = ["-ra", "--strict-markers", "--strict-config"]
+markers    = ["live: hits the real YOK NTC network (opt-in)"]
+
+[tool.pyright]
+include                = ["src", "tests"]
+pythonVersion          = "3.14"
+typeCheckingMode       = "strict"
+reportMissingTypeStubs = "warning"
+reportImplicitOverride = "error"
+venvPath               = "."
+venv                   = ".venv"
+
+[tool.ruff]
+fix            = true    # auto-apply safe fixes
+show-fixes     = true    # log every applied fix
+target-version = "py314" # warn on features unavailable in 3.14
+
+[tool.ruff.format]
+docstring-code-format = true # reformat code snippets inside docstrings
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "FBT",    # accept boolean positional args
+    "T20",    # print() is fine
+    "D203",   # incorrect-blank-line-before-class - conflicts with D211
+    "D213",   # multi-line-summary-second-line    - conflicts with D212
+    "D107",   # __init__ doesn't need a docstring
+    "COM812", # missing-trailing-comma - conflicts with `ruff format`
+    "ISC001", # single-line-implicit-string-concatenation - conflicts with `ruff format`
+    "CPY001", # LICENSE file already covers the copyright
+]
+task-tags = ["TODO", "FIXME", "XXX", "HACK"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true # *args/**kwargs may use Any without annotation
+
+[tool.ruff.lint.flake8-builtins]
+strict-checking = true # compare module names, not full paths (A005)
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 88 # documentation line length (W505)
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",    # `assert` is the point in pytest
+    "PLR2004", # magic-number compares are normal in test code
+    "ANN",     # over-annotating tests hurts readability
+    "D",       # docstrings on every test function are noise
+    "INP001",  # tests/ is intentionally not a package
+    "SLF001",  # tests legitimately exercise `_private` attrs
+    "FBT001",  # tests pass booleans positionally
+    "EM101",   # short string literals in `raise` are fine in tests
+    "EM102",   # f-string in `raise` is fine in tests
+    "TRY003",  # exact messages are part of the test's assertion
+    "TRY301",  # `raise` inside `try` is fine in tests that exercise it
+]
+"src/yoktez/__init__.py" = [
+    "D104", # the re-export-only __init__ docstring would be busywork
+    "F401", # re-exports look "unused"; intent is documented via __all__
+]
+"examples/**/*.py" = [
+    "INP001", # examples/ is not a package
+    "D",      # example scripts explain themselves in prose, not docstrings
+    "T201",   # print() is the output channel
+    "ERA001", # commented-out code may illustrate alternative usage
+]

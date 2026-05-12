@@ -23,9 +23,15 @@ venv.bak/
 # ruff
 .ruff_cache/
 
+# PyTest
+.pytest_cache
+
 ### AI Stuff ###
 # Claude Code
 .claude
 
 ### Development Tests & Debug ###
 .dev/
+
+### VSCode ###
+.vscode
