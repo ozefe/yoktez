@@ -5,6 +5,7 @@ defaults the YOK NTC JSP/AJAX surface expects: follow-redirects, browser-style
 User-Agent, etc.
 """
 
+import logging
 from typing import TYPE_CHECKING
 
 import httpx
@@ -27,6 +28,18 @@ DEFAULT_USER_AGENT = (
 
 _DEFAULT_TIMEOUT = 30.0
 _DEFAULT_RETRIES = 3
+
+_logger = logging.getLogger("yoktez.http")
+
+
+def _log_response(response: httpx.Response) -> None:
+    request = response.request
+    _logger.debug(
+        "%s %s -> %d",
+        request.method,
+        request.url,
+        response.status_code,
+    )
 
 
 def default_transport(retries: int = _DEFAULT_RETRIES) -> httpx.HTTPTransport:
@@ -86,4 +99,5 @@ def build_http_client(
         follow_redirects=True,
         base_url=base_url,
         transport=transport if transport is not None else default_transport(retries),
+        event_hooks={"response": [_log_response]},
     )

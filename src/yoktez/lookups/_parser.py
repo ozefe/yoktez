@@ -7,6 +7,7 @@ returned by `parse_eklecikar_list`).
 """
 
 import html as _html
+import logging
 import re
 from typing import TYPE_CHECKING
 
@@ -25,6 +26,8 @@ __all__ = [
     "parse_radio_input_list",
     "parse_universities_json",
 ]
+
+_logger = logging.getLogger("yoktez.lookups")
 
 _NULL_LITERAL = "null"
 
@@ -101,6 +104,12 @@ def parse_radio_input_list(
         ad = _flat(tag.get("ad"))
         kod = _flat(tag.get("kod"))
         if ad is None or kod is None:
+            # A wire-shape drift that drops `ad` or `kod` from a radio input would
+            # silently shrink the result list; log it so operators can investigate.
+            _logger.warning(
+                "skipping radio input with missing ad/kod for name_attr=%r",
+                name_attr,
+            )
             continue
 
         # BS4 + lxml lowercases HTML attribute names, so the source `yoksisId` surfaces

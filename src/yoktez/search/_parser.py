@@ -6,6 +6,7 @@ each tag's matching JSON entry, and stitches the two into a typed model.
 """
 
 import json
+import logging
 import re
 from typing import TYPE_CHECKING
 
@@ -22,6 +23,7 @@ if TYPE_CHECKING:
 
 __all__ = ["parse_search_page"]
 
+_logger = logging.getLogger("yoktez.search")
 
 _REFERENCE_DATA = re.compile(
     r"const\s+referenceData\s*=\s*(\{.*?\})\s*;",
@@ -40,6 +42,11 @@ _TEZ_NO_PREFIX = re.compile(r"^\s*Tez\s*No\s*:\s*", re.IGNORECASE)
 # "2.000 tanesi görüntülenmektedir." reports the 2000-card cap and is ignored: the cap
 # is a library-side invariant.
 _RESULT_TOTAL = re.compile(r"Arama\s+sonucunda\s+([\d.]+)\s+kayıt\s+bulundu")
+
+# Cheap presence check used to distinguish "advisory block is missing" (legitimate
+# empty-result page) from "advisory block is present but unparsable" (real degradation
+# worth warning about).
+_ADVISORY_MARKER = "warning-text"
 
 
 def parse_search_page(html: str) -> SearchResults:
@@ -73,7 +80,13 @@ def _extract_total(html: str) -> int:
     match = _RESULT_TOTAL.search(html)
     if match is None:
         # Advisory block is only emitted when the server has something to report; absent
-        # block in practice means an empty result set.
+        # block in practice means an empty result set. But if the block IS present and
+        # the regex still missed, that is a wire-shape drift worth surfacing.
+        if _ADVISORY_MARKER in html:
+            _logger.warning(
+                "result-total advisory block present but regex did not match; wire "
+                "shape may have changed"
+            )
         return 0
 
     return int(match.group(1).replace(".", ""))

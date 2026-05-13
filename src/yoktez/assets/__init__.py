@@ -1,5 +1,6 @@
 """Assets sub-package: download-key fetch + PDF/appendix streaming."""
 
+import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
 
@@ -14,6 +15,8 @@ if TYPE_CHECKING:
 __all__ = ["AssetsService", "ThesisAssets"]
 
 _DEFAULT_CHUNK_SIZE = 2**16
+
+_logger = logging.getLogger("yoktez.assets")
 
 
 class AssetsService:
@@ -116,9 +119,18 @@ class AssetsService:
         ) as response:
             response.raise_for_status()
 
+            bytes_written = 0
             if isinstance(dest, (str, Path)):
-                with Path(dest).open("wb") as fh:
-                    fh.writelines(response.iter_bytes(chunk_size))
+                target = Path(dest)
+                with target.open("wb") as fh:
+                    for chunk in response.iter_bytes(chunk_size):
+                        fh.write(chunk)
+                        bytes_written += len(chunk)
+                target_desc = str(target)
             else:
                 for chunk in response.iter_bytes(chunk_size):
                     dest.write(chunk)
+                    bytes_written += len(chunk)
+                target_desc = f"<{type(dest).__name__}>"
+
+        _logger.debug("streamed %d bytes to %s", bytes_written, target_desc)
