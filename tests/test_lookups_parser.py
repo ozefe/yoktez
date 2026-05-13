@@ -5,6 +5,7 @@ that exercise one logical branch at a time. Fixtures stay out of the parser test
 surface; the service tests exercise integration end-to-end.
 """
 
+from yoktez.enums import UniversitySource
 from yoktez.lookups._parser import (
     parse_eklecikar_list,
     parse_radio_input_list,
@@ -13,12 +14,20 @@ from yoktez.lookups._parser import (
 from yoktez.lookups.models import University
 
 
-def test_universities_json_maps_kod_displayname_yoksisid_into_record_fields():
+def test_universities_json_threads_source_onto_every_record():
     parsed = parse_universities_json(
-        [{"kod": "abc", "displayName": "X", "yoksisId": "y"}]
+        [{"kod": "abc", "displayName": "X", "yoksisId": "y"}],
+        source=UniversitySource.INT,
     )
 
-    assert parsed == [University(display_name="X", id="abc", yoksis_id="y")]
+    assert parsed == [
+        University(
+            display_name="X",
+            id="abc",
+            yoksis_id="y",
+            source=UniversitySource.INT,
+        )
+    ]
 
 
 def test_radio_input_list_returns_none_when_yoksis_attribute_is_missing():

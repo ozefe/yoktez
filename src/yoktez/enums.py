@@ -1,7 +1,7 @@
-"""Enums for YOK NTC filter values and the `coerce` wire-value helper."""
+"""Enums for YOK NTC filter values."""
 
 from enum import Enum, IntEnum, StrEnum
-from typing import overload
+from typing import Self, overload
 
 __all__ = [
     "AccessType",
@@ -34,6 +34,22 @@ class ThesisType(IntEnum):
     SPECIALIZATION_IN_DENTISTRY = 5
     MINOR_SPECIALIZATION_IN_MEDICINE = 6
     EXPERTISE_IN_PHARMACY = 7
+
+    @classmethod
+    def from_display(cls, name: str) -> Self:
+        """Resolve a Turkish wire-form display name to a `ThesisType` member.
+
+        `name` is the value found in YOK NTC responses (Turkish only). `from_display`
+        never emits `ALL` -- that sentinel is request-side only.
+
+        Raises:
+            ValueError: `name` is not a known Turkish display string.
+        """
+        try:
+            return _THESIS_TYPE_BY_DISPLAY[name]  # pyright: ignore[reportReturnType]
+        except KeyError as exc:
+            msg = f"{name!r} is not a ThesisType display name"
+            raise ValueError(msg) from exc
 
 
 class ThesisStatus(IntEnum):
@@ -101,6 +117,24 @@ class ThesisLanguage(IntEnum):
     ALBANIAN = 44
     LATVIAN = 45
     NORWEGIAN = 46
+
+    @classmethod
+    def from_display(cls, name: str) -> Self:
+        """Resolve a Turkish wire-form language name to a `ThesisLanguage` member.
+
+        `name` is the value found in YOK NTC responses (Turkish only). The map covers
+        the known languages; unmapped names raise `ValueError` so the parser layer can
+        wrap it as `ParseError` and surface the missing entry. `from_display` never
+        emits `ALL` -- that sentinel is request-side only.
+
+        Raises:
+            ValueError: `name` is not a known Turkish language display string.
+        """
+        try:
+            return _THESIS_LANGUAGE_BY_DISPLAY[name]  # pyright: ignore[reportReturnType]
+        except KeyError as exc:
+            msg = f"{name!r} is not a ThesisLanguage display name"
+            raise ValueError(msg) from exc
 
 
 class SearchField(IntEnum):
@@ -245,3 +279,64 @@ def coerce_str_enum(enum_cls: type[StrEnum], value: object) -> str:
 
     msg = f"Cannot coerce {type(value).__name__} to {enum_cls.__name__}"
     raise TypeError(msg)
+
+
+# Response-side display-name lookup tables
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Sourced from real YOK NTC search-result HTML. Turkish keys only. `ALL` is
+# intentionally absent: it's a filter-only sentinel that never appears in wire-side
+# responses.
+
+
+_THESIS_TYPE_BY_DISPLAY: dict[str, ThesisType] = {
+    "Yüksek Lisans": ThesisType.MASTER,
+    "Doktora": ThesisType.DOCTORATE,
+    "Tıpta Uzmanlık": ThesisType.SPECIALIZATION_IN_MEDICINE,
+    "Sanatta Yeterlik": ThesisType.PROFICIENCY_IN_ART,
+    "Diş Hekimliği Uzmanlık": ThesisType.SPECIALIZATION_IN_DENTISTRY,
+    "Tıpta Yan Dal Uzmanlık": ThesisType.MINOR_SPECIALIZATION_IN_MEDICINE,
+    "Eczacılıkta Uzmanlık": ThesisType.EXPERTISE_IN_PHARMACY,
+}
+
+_THESIS_LANGUAGE_BY_DISPLAY: dict[str, ThesisLanguage] = {
+    "Türkçe": ThesisLanguage.TURKISH,
+    "İngilizce": ThesisLanguage.ENGLISH,
+    "Arapça": ThesisLanguage.ARABIC,
+    "Almanca": ThesisLanguage.GERMAN,
+    "Fransızca": ThesisLanguage.FRENCH,
+    "İspanyolca": ThesisLanguage.SPANISH,
+    "İtalyanca": ThesisLanguage.ITALIAN,
+    "Rusça": ThesisLanguage.RUSSIAN,
+    "Lehçe": ThesisLanguage.POLISH,
+    "Çince": ThesisLanguage.CHINESE,
+    "Kürtçe": ThesisLanguage.KURDISH,
+    "Azerice": ThesisLanguage.AZERBAIJANI,
+    "Bulgarca": ThesisLanguage.BULGARIAN,
+    "Çekçe": ThesisLanguage.CZECH,
+    "Romence": ThesisLanguage.ROMANIAN,
+    "Felemenkçe": ThesisLanguage.DUTCH,
+    "Japonca": ThesisLanguage.JAPANESE,
+    "Farsça": ThesisLanguage.PERSIAN,
+    "Yunanca": ThesisLanguage.GREEK,
+    "Slovence": ThesisLanguage.SLOVENIAN,
+    "Makedonca": ThesisLanguage.MACEDONIAN,
+    "Çerkezce": ThesisLanguage.ADYGHE,
+    "Kırgızca": ThesisLanguage.KYRGYZ,
+    "Boşnakça": ThesisLanguage.BOSNIAN,
+    "Gürcüce": ThesisLanguage.GEORGIAN,
+    "Korece": ThesisLanguage.KOREAN,
+    "Ermenice": ThesisLanguage.ARMENIAN,
+    "Zazaca": ThesisLanguage.ZAZAKI,
+    "Malayca": ThesisLanguage.MALAY,
+    "Kazakça": ThesisLanguage.KAZAKH,
+    "Ukraynaca": ThesisLanguage.UKRAINIAN,
+    "Moğolca": ThesisLanguage.MONGOLIAN,
+    "Endonezce": ThesisLanguage.INDONESIAN,
+    "Özbekçe": ThesisLanguage.UZBEK,
+    "Macarca": ThesisLanguage.HUNGARIAN,
+    "Sırpça": ThesisLanguage.SERBIAN,
+    "Portekizce": ThesisLanguage.PORTUGUESE,
+    "Arnavutça": ThesisLanguage.ALBANIAN,
+    "Letonca": ThesisLanguage.LATVIAN,
+    "Norveççe": ThesisLanguage.NORWEGIAN,
+}

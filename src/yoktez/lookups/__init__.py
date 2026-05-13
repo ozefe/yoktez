@@ -10,6 +10,7 @@ from yoktez._endpoints import (
     TARAMA_AJAX,
     UNIVERSITIES,
 )
+from yoktez._helpers import resolve_yoksis_id
 from yoktez.bilingual import Bilingual
 from yoktez.enums import KeywordGroup, KeywordLanguage, UniversitySource, coerce
 from yoktez.lookups._parser import (
@@ -63,16 +64,20 @@ class LookupsService:
         """Fetch every university tracked by YOK NTC, scoped by `source`.
 
         `source` may be a `UniversitySource` member, its wire string (`"TR"`, `"INT"`),
-        or its member name. Result is memoized per source value.
+        or its member name. Result is memoized per source value. Each returned record
+        carries the resolved `UniversitySource` so callers can issue correctly-scoped
+        detail searches without re-querying.
         """
         source_value = coerce(UniversitySource, source)
+        source_member = UniversitySource(source_value)
 
         return self._memoize(
             ("universities", source_value),
             lambda: parse_universities_json(
                 self.client.http_client.get(
                     UNIVERSITIES, params={"type": source_value}
-                ).json()
+                ).json(),
+                source=source_member,
             ),
         )
 
@@ -86,7 +91,7 @@ class LookupsService:
             ValueError: `university` is a `University` whose `yoksis_id` is `None`
                 (legacy-source records cannot drive hierarchical lookups).
         """
-        university_id = _yoksis_id(university, owner="University")
+        university_id = resolve_yoksis_id(university)
 
         return self._memoize(
             ("institutes", university_id),
@@ -113,8 +118,8 @@ class LookupsService:
         Raises:
             ValueError: either argument is a model whose `yoksis_id` is `None`.
         """
-        university_id = _yoksis_id(university, owner="University")
-        institute_id = _yoksis_id(institute, owner="Institute")
+        university_id = resolve_yoksis_id(university)
+        institute_id = resolve_yoksis_id(institute)
 
         return self._memoize(
             ("divisions", university_id, institute_id),
@@ -308,24 +313,3 @@ class LookupsService:
             self._cache[key] = fetch()
 
         return cast("T", self._cache[key])
-
-
-def _yoksis_id(obj: University | Institute | str, *, owner: str) -> str:
-    """Resolve `obj` to a YOKSIS ID string usable as a `uniKod`/`ensKod` query value.
-
-    Strings pass through unchanged. Model instances must carry a non-`None` `yoksis_id`;
-    legacy-source entries (returned from old `*Ekle.jsp` endpoints) set `yoksis_id` to
-    `None` and cannot drive hierarchical lookups -- the call raises `ValueError` rather
-    than silently issuing a malformed request.
-    """
-    if isinstance(obj, str):
-        return obj
-
-    if obj.yoksis_id is None:
-        msg = (
-            f"{owner} has yoksis_id=None; legacy-loaded entries cannot drive "
-            f"hierarchical lookups"
-        )
-        raise ValueError(msg)
-
-    return obj.yoksis_id

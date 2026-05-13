@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from yoktez.bilingual import Bilingual
-    from yoktez.enums import KeywordGroup
+    from yoktez.enums import KeywordGroup, UniversitySource
 
 __all__ = [
     "Department",
@@ -35,6 +35,7 @@ class University:
     display_name: str
     id: str
     yoksis_id: str | None
+    source: UniversitySource
 
 
 @dataclass(frozen=True, slots=True)

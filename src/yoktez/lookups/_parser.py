@@ -17,6 +17,9 @@ from yoktez.lookups.models import University
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
 
+    from yoktez.enums import UniversitySource
+
+
 __all__ = [
     "parse_eklecikar_list",
     "parse_radio_input_list",
@@ -47,8 +50,14 @@ _EKLECIKAR_PATTERN = re.compile(
 _JS_ESCAPED_QUOTE = re.compile(r"\\'")
 
 
-def parse_universities_json(data: Sequence[Mapping[str, str]]) -> list[University]:
+def parse_universities_json(
+    data: Sequence[Mapping[str, str]], *, source: UniversitySource
+) -> list[University]:
     """Map the modern JSON payload to `University` records.
+
+    `source` is supplied by the caller (the service knows whether the batch came from
+    the TR or INT endpoint) and stamped onto every record so callers downstream can
+    issue correctly-scoped detail searches without re-querying.
 
     Note:
         The modern endpoint always carries a non-`None` `yoksisId`, but the model still
@@ -59,6 +68,7 @@ def parse_universities_json(data: Sequence[Mapping[str, str]]) -> list[Universit
             display_name=entry["displayName"],
             id=entry["kod"],
             yoksis_id=entry["yoksisId"],
+            source=source,
         )
         for entry in data
     ]

@@ -31,6 +31,7 @@ from yoktez.lookups import (
     Subject,
     University,
 )
+from yoktez.search import SearchResults, Thesis
 
 __all__ = [
     "AccessType",
@@ -47,8 +48,10 @@ __all__ = [
     "MatchType",
     "ParseError",
     "SearchField",
+    "SearchResults",
     "Section",
     "Subject",
+    "Thesis",
     "ThesisLanguage",
     "ThesisNoPermitError",
     "ThesisPreparingError",

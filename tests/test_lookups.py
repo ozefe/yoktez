@@ -62,7 +62,12 @@ def test_institutes_treats_university_object_and_yoksis_string_as_equivalent():
             200, text='<input name="selected_institute" ad="A" kod="1" yoksisId="Y">'
         )
 
-    uni = University(display_name="X", id="opaque", yoksis_id="YOK")
+    uni = University(
+        display_name="X",
+        id="opaque",
+        yoksis_id="YOK",
+        source=UniversitySource.TR,
+    )
 
     with _build_client(httpx.MockTransport(handler)) as client:
         from_obj = client.lookups.institutes(uni)
@@ -72,7 +77,12 @@ def test_institutes_treats_university_object_and_yoksis_string_as_equivalent():
 
 
 def test_institutes_rejects_university_without_yoksis_id():
-    legacy = University(display_name="L", id="42", yoksis_id=None)
+    legacy = University(
+        display_name="L",
+        id="42",
+        yoksis_id=None,
+        source=UniversitySource.TR,
+    )
 
     with (
         _build_client(httpx.MockTransport(lambda _r: httpx.Response(200))) as client,
@@ -103,6 +113,21 @@ def test_all_universities_composes_results_from_both_modern_sources():
         names = {u.display_name for u in client.lookups.all_universities()}
 
     assert names == {"UNI_TR", "UNI_INT"}
+
+
+def test_universities_threads_the_requested_source_onto_every_record():
+    def handler(_request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json=[{"kod": "k", "displayName": "D", "yoksisId": "y"}],
+        )
+
+    with _build_client(httpx.MockTransport(handler)) as client:
+        tr_results = client.lookups.universities(UniversitySource.TR)
+        int_results = client.lookups.universities(UniversitySource.INT)
+
+    assert all(u.source is UniversitySource.TR for u in tr_results)
+    assert all(u.source is UniversitySource.INT for u in int_results)
 
 
 def test_all_subjects_wraps_each_name_in_bilingual():
