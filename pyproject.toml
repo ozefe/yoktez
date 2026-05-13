@@ -88,6 +88,12 @@ ignore = [
 ]
 task-tags = ["TODO", "FIXME", "XXX", "HACK"]
 
+# Turkish characters are core to this library's domain; whitelist the pairs that
+# RUF001/RUF002/RUF003 would otherwise flag as ambiguous against their ASCII
+# look-alikes. Only the dotted/dotless `i` pair is genuinely confusable -- the other
+# Turkish diacritics do not collide with ASCII.
+allowed-confusables = ["ı", "İ"]
+
 [tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = true # *args/**kwargs may use Any without annotation
 

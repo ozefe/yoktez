@@ -22,6 +22,15 @@ from yoktez.errors import (
     ThesisUnderEmbargoError,
     YoktezError,
 )
+from yoktez.lookups import (
+    Department,
+    Division,
+    Institute,
+    Keyword,
+    Section,
+    Subject,
+    University,
+)
 
 __all__ = [
     "AccessType",
@@ -29,11 +38,17 @@ __all__ = [
     "AssetStatus",
     "Bilingual",
     "Client",
+    "Department",
+    "Division",
+    "Institute",
+    "Keyword",
     "KeywordGroup",
     "KeywordLanguage",
     "MatchType",
     "ParseError",
     "SearchField",
+    "Section",
+    "Subject",
     "ThesisLanguage",
     "ThesisNoPermitError",
     "ThesisPreparingError",
@@ -41,6 +56,7 @@ __all__ = [
     "ThesisType",
     "ThesisUnavailableError",
     "ThesisUnderEmbargoError",
+    "University",
     "UniversitySource",
     "YoktezError",
     "__version__",

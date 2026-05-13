@@ -1,0 +1,2309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+	 
+	 
+
+
+
+
+ 
+
+<html>
+<head>
+	<title>CoHE Thesis Center | Selecting Subject</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="Aydın Emre Ceviz"> 
+                <meta name="description" content="Yükseköğretim Kurulu Tez Merkezi'nde bulunan basılı bütün tezleri tarayarak, üye olduktan sonra izinli tezlere tam metin(pdf) olarak erişebilirisiniz."> 
+                <meta name="keywords" content="Yök, Yükseköğretim Kurulu Başkanlığı, Tez, Thesis, Dissertation"> 
+
+
+  <link href="theme/styles.css" rel="stylesheet" type="text/css">
+<link href="css/ustMenu.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<SCRIPT language="JavaScript" src="js/genel_son.js?12122019"></SCRIPT>
+
+	<script type="text/javascript" src="js/jquery.jcarousel.pack.js"></script>
+	<script type="text/javascript" src="js/func.js"></script>
+	<script type="text/javascript" src="js/table.js"></script>
+	<link rel="stylesheet" href="jquery/demos.css" />
+
+<!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46094168-1', 'yok.gov.tr');
+  ga('send', 'pageview');
+
+</script> -->
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X9KNJ1MYD7"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+	gtag('config', 'G-X9KNJ1MYD7');
+</script>
+<script type="text/javascript" src="js/table.js"></script>
+	<link rel="stylesheet" href="jquery/demos.css" />
+	<script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.highlight-4.js"></script>
+	
+<script type="text/javascript">
+function pageexample(page) {
+	var t = document.getElementById('page');
+	var res;
+	if (page=="previous") {
+		res=Table.pagePrevious(t);
+	}
+	else if (page=="next") {
+		res=Table.pageNext(t);
+	}
+	else {
+		res=Table.page(t,page);
+	}
+	var currentPage = res.page+1;
+	$('.pagelink').removeClass('currentpage');
+	$('#page'+currentPage).addClass('currentpage');
+}
+function eklecikar(deger,kod,alanNo) {
+	var veri = window.opener.document.GForm.Konu.value ;
+	var veriId = window.opener.document.GForm.konuIdler.value ;
+		 veri = veri.replace(/\r/g, "");
+		 veriId = veriId.replace(/\r/g, "");
+	if(veri != "" ) {
+		veri = veri.replace(/\r/g, "\n");
+		veri = "|"+veri.replace(/\n/g, "#|") + "#";
+	}
+	var deger = "|"+deger+"#";
+	if(veriId != "" ) {
+		veriId = veriId.replace(/\r/g, "\n");
+		veriId = "|"+veriId.replace(/\n/g, "#|") + "#";
+	}
+	var kod = "|"+kod+"#";
+	if ( veri.indexOf(deger,0) > -1 ) { 
+	yeniveri = veri.replace(deger, "") ;
+	yeniId=veriId.replace(kod, "") ;
+	
+	}
+	else {	
+	yeniveri = veri + deger; 
+	yeniId=veriId + kod;
+	}
+	yeniveri = yeniveri.replace(/[|]/g, "");
+	yeniveri = yeniveri.substr(0,yeniveri.length-1) ;
+	
+	yeniId = yeniId.replace(/[|]/g, "");
+	yeniId = yeniId.substr(0,yeniId.length-1) ;
+	var ysayi = yeniveri.split("#");
+	if ( ysayi.length > 3 ) 
+	alert("3 konu başlığı verebilirsiniz.") ;
+	else {
+	window.opener.document.GForm.Konu.value = yeniveri.replace(/#/g, "\n");
+	window.opener.document.GForm.konuIdler.value = yeniId.replace(/#/g, "\n");
+	
+	 var target = document.getElementById("TextArea"+alanNo);
+    if( target.style.fontWeight == "bolder" ) {
+        target.style.fontWeight = "normal";
+    } else {
+        target.style.fontWeight = "bolder";
+        target.style.color = "#FF0000";
+    }
+	}
+	
+	}
+
+function eklecikar1(deger){
+	sayi = window.opener.document.GForm.Konu.value ;
+	var ysayi = sayi.split("\n");
+	var yysayi = "";
+	var varyok=0;
+	for(var i=0;i < ysayi.length-1 ;i++) {
+	//alert(deger.length + "  deger" + ysayi[i].substr(0, ysayi[i].length-1))
+	if ( deger != ysayi[i].substr(0, ysayi[i].length-1) ) { yysayi += ysayi[i] ;varyok=varyok+1; }
+	} //for
+	if(varyok==ysayi.length-1 && varyok < 3) { yysayi += deger + "\n"; }
+	if ( varyok == 3 ) { alert("3 konu başlığı verebilirsiniz."); }
+	window.opener.document.GForm.Konu.value = yysayi;
+}
+</script>
+
+ <script>
+ 
+      $("#filt").live('change keyup paste', function() {
+    	  
+    	  $("#sf").removeHighlight();
+    	  $("#sf").highlight($('#filt').val().toLowerCase());
+    	});
+   </script>
+
+  <style>
+  .highlight { background-color: yellow }
+  </style>
+</head>
+
+<BODY >
+
+	<table class="filterable" id="sf" width="100%"  
+	cellspacing="1" cellpadding="1" align="center">
+		<thead>
+			<tr class="renka"><td>
+				 Filter<input id="filt" name="filt" onkeyup="filter(this, 'sf', '1');"  type="text" size="30"></input>
+				 </TD> 
+				 <td align="right"><a style="font-size: 12px" href="javascript:window.close()">Close</a>
+				 </td>
+			</tr>
+		</thead>
+		<tbody>
+
+ 
+
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Acil Tıp = Emergency Medicine','192','0')" style="color: rgb(0, 136, 204)">Acil Tıp = Emergency Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Adli Tıp = Forensic Medicine','1','1')" style="color: rgb(0, 136, 204)">Adli Tıp = Forensic Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ağaç İşleri = Wood Products','2','2')" style="color: rgb(0, 136, 204)">Ağaç İşleri = Wood Products</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Aile Hekimliği = Family Medicine','3','3')" style="color: rgb(0, 136, 204)">Aile Hekimliği = Family Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Aile Planlaması = Family Planning','4','4')" style="color: rgb(0, 136, 204)">Aile Planlaması = Family Planning</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Aktüerya Bilimleri = Actuarial Sciences','5','5')" style="color: rgb(0, 136, 204)">Aktüerya Bilimleri = Actuarial Sciences</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Allerji ve İmmünoloji = Allergy and Immunology','6','6')" style="color: rgb(0, 136, 204)">Allerji ve İmmünoloji = Allergy and Immunology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Alman Dili ve Edebiyatı = German Linguistics and Literature','7','7')" style="color: rgb(0, 136, 204)">Alman Dili ve Edebiyatı = German Linguistics and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Amerikan Kültürü ve Edebiyatı = American Culture and Literature','8','8')" style="color: rgb(0, 136, 204)">Amerikan Kültürü ve Edebiyatı = American Culture and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Anatomi = Anatomy','9','9')" style="color: rgb(0, 136, 204)">Anatomi = Anatomy</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Anestezi ve Reanimasyon = Anesthesiology and Reanimation','10','10')" style="color: rgb(0, 136, 204)">Anestezi ve Reanimasyon = Anesthesiology and Reanimation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Antropoloji = Anthropology','11','11')" style="color: rgb(0, 136, 204)">Antropoloji = Anthropology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Arkeoloji = Archeology','12','12')" style="color: rgb(0, 136, 204)">Arkeoloji = Archeology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Arkeometri = Archaeometry','13','13')" style="color: rgb(0, 136, 204)">Arkeometri = Archaeometry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Arşiv = Archive','14','14')" style="color: rgb(0, 136, 204)">Arşiv = Archive</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Askeri Sağlık Hizmetleri = Military Health Services','193','15')" style="color: rgb(0, 136, 204)">Askeri Sağlık Hizmetleri = Military Health Services</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Astronomi ve Uzay Bilimleri = Astronomy and Space Sciences','15','16')" style="color: rgb(0, 136, 204)">Astronomi ve Uzay Bilimleri = Astronomy and Space Sciences</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bale ve Dans = Ballet and Dance','16','17')" style="color: rgb(0, 136, 204)">Bale ve Dans = Ballet and Dance</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Balıkçılık Teknolojisi = Fisheries Technology','17','18')" style="color: rgb(0, 136, 204)">Balıkçılık Teknolojisi = Fisheries Technology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bankacılık = Banking','18','19')" style="color: rgb(0, 136, 204)">Bankacılık = Banking</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Batı Dilleri ve Edebiyatı = Western Linguistics and Literature','19','20')" style="color: rgb(0, 136, 204)">Batı Dilleri ve Edebiyatı = Western Linguistics and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Besin Hijyeni ve Teknolojisi = Food Hygiene and Technology','20','21')" style="color: rgb(0, 136, 204)">Besin Hijyeni ve Teknolojisi = Food Hygiene and Technology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Beslenme ve Diyetetik = Nutrition and Dietetics','21','22')" style="color: rgb(0, 136, 204)">Beslenme ve Diyetetik = Nutrition and Dietetics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bibliyografya = Bibliography','22','23')" style="color: rgb(0, 136, 204)">Bibliyografya = Bibliography</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bilgi ve Belge Yönetimi = Information and Records Management','23','24')" style="color: rgb(0, 136, 204)">Bilgi ve Belge Yönetimi = Information and Records Management</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bilgisayar Mühendisliği Bilimleri-Bilgisayar ve Kontrol = Computer Engineering and Computer Science and Control','24','25')" style="color: rgb(0, 136, 204)">Bilgisayar Mühendisliği Bilimleri-Bilgisayar ve Kontrol = Computer Engineering and Computer Science and Control</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Bilim ve Teknoloji = Science and Technology','25','26')" style="color: rgb(0, 136, 204)">Bilim ve Teknoloji = Science and Technology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyofizik = Biophysics','26','27')" style="color: rgb(0, 136, 204)">Biyofizik = Biophysics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyografi = Biography','27','28')" style="color: rgb(0, 136, 204)">Biyografi = Biography</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyoistatistik = Biostatistics','28','29')" style="color: rgb(0, 136, 204)">Biyoistatistik = Biostatistics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyokimya = Biochemistry','29','30')" style="color: rgb(0, 136, 204)">Biyokimya = Biochemistry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyoloji = Biology','30','31')" style="color: rgb(0, 136, 204)">Biyoloji = Biology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyomühendislik = Bioengineering','31','32')" style="color: rgb(0, 136, 204)">Biyomühendislik = Bioengineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Biyoteknoloji = Biotechnology','32','33')" style="color: rgb(0, 136, 204)">Biyoteknoloji = Biotechnology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Botanik = Botany','33','34')" style="color: rgb(0, 136, 204)">Botanik = Botany</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Coğrafya = Geography','34','35')" style="color: rgb(0, 136, 204)">Coğrafya = Geography</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Çalışma Ekonomisi ve Endüstri İlişkileri = Labour Economics and Industrial Relations','35','36')" style="color: rgb(0, 136, 204)">Çalışma Ekonomisi ve Endüstri İlişkileri = Labour Economics and Industrial Relations</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Çevre Mühendisliği = Environmental Engineering','36','37')" style="color: rgb(0, 136, 204)">Çevre Mühendisliği = Environmental Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Çocuk Cerrahisi = Pediatric Surgery','37','38')" style="color: rgb(0, 136, 204)">Çocuk Cerrahisi = Pediatric Surgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Çocuk Sağlığı ve Hastalıkları = Child Health and Diseases','38','39')" style="color: rgb(0, 136, 204)">Çocuk Sağlığı ve Hastalıkları = Child Health and Diseases</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Demografi = Demography','39','40')" style="color: rgb(0, 136, 204)">Demografi = Demography</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deniz Bilimleri = Marine Science','40','41')" style="color: rgb(0, 136, 204)">Deniz Bilimleri = Marine Science</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deniz ve Sualtı Hekimliği = Marine and Underwater Medicine','41','42')" style="color: rgb(0, 136, 204)">Deniz ve Sualtı Hekimliği = Marine and Underwater Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Denizcilik = Marine','42','43')" style="color: rgb(0, 136, 204)">Denizcilik = Marine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deontoloji ve Tıp Tarihi = Medical History and Ethics','43','44')" style="color: rgb(0, 136, 204)">Deontoloji ve Tıp Tarihi = Medical History and Ethics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deprem Mühendisliği = Earthquake Engineering','44','45')" style="color: rgb(0, 136, 204)">Deprem Mühendisliği = Earthquake Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deri Mühendisliği = Leather Engineering','45','46')" style="color: rgb(0, 136, 204)">Deri Mühendisliği = Leather Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Deri ve Kürk Teknolojisi = Leather and Fur Technology','46','47')" style="color: rgb(0, 136, 204)">Deri ve Kürk Teknolojisi = Leather and Fur Technology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Dermatoloji = Dermatology','47','48')" style="color: rgb(0, 136, 204)">Dermatoloji = Dermatology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Dil ve Konuşma Terapisi = Language and Speech Therapy','207','49')" style="color: rgb(0, 136, 204)">Dil ve Konuşma Terapisi = Language and Speech Therapy</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Dilbilim = Linguistics','48','50')" style="color: rgb(0, 136, 204)">Dilbilim = Linguistics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Din = Religion','49','51')" style="color: rgb(0, 136, 204)">Din = Religion</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Diş Hekimliği = Dentistry','50','52')" style="color: rgb(0, 136, 204)">Diş Hekimliği = Dentistry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Doğu Dilleri ve Edebiyatı = Eastern Linguistics and Literature','51','53')" style="color: rgb(0, 136, 204)">Doğu Dilleri ve Edebiyatı = Eastern Linguistics and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Dokümantasyon ve Enformasyon = Documentation and Information','52','54')" style="color: rgb(0, 136, 204)">Dokümantasyon ve Enformasyon = Documentation and Information</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ebelik = Midwifery','184','55')" style="color: rgb(0, 136, 204)">Ebelik = Midwifery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Eczacılık ve Farmakoloji = Pharmacy and Pharmacology','53','56')" style="color: rgb(0, 136, 204)">Eczacılık ve Farmakoloji = Pharmacy and Pharmacology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Eğitim ve Öğretim = Education and Training','54','57')" style="color: rgb(0, 136, 204)">Eğitim ve Öğretim = Education and Training</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ekonometri = Econometrics','55','58')" style="color: rgb(0, 136, 204)">Ekonometri = Econometrics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ekonomi = Economics','56','59')" style="color: rgb(0, 136, 204)">Ekonomi = Economics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('El Sanatları = Crafts','57','60')" style="color: rgb(0, 136, 204)">El Sanatları = Crafts</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Elektrik ve Elektronik Mühendisliği = Electrical and Electronics Engineering','58','61')" style="color: rgb(0, 136, 204)">Elektrik ve Elektronik Mühendisliği = Electrical and Electronics Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Endokrinoloji ve Metabolizma Hastalıkları = Endocrinology and Metabolic Diseases','59','62')" style="color: rgb(0, 136, 204)">Endokrinoloji ve Metabolizma Hastalıkları = Endocrinology and Metabolic Diseases</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Endüstri Ürünleri Tasarımı = Industrial Design','60','63')" style="color: rgb(0, 136, 204)">Endüstri Ürünleri Tasarımı = Industrial Design</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Endüstri ve Endüstri Mühendisliği = Industrial and Industrial Engineering','61','64')" style="color: rgb(0, 136, 204)">Endüstri ve Endüstri Mühendisliği = Industrial and Industrial Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Enerji = Energy','62','65')" style="color: rgb(0, 136, 204)">Enerji = Energy</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji = Infectious Diseases and Clinical Microbiology','111','66')" style="color: rgb(0, 136, 204)">Enfeksiyon Hastalıkları ve Klinik Mikrobiyoloji = Infectious Diseases and Clinical Microbiology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ergoterapi = Occupational Therapy','181','67')" style="color: rgb(0, 136, 204)">Ergoterapi = Occupational Therapy</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Eski Çağ Dilleri ve Kültürleri = Ancient Linguistics and Cultures','63','68')" style="color: rgb(0, 136, 204)">Eski Çağ Dilleri ve Kültürleri = Ancient Linguistics and Cultures</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ev Ekonomisi = Home Economics','64','69')" style="color: rgb(0, 136, 204)">Ev Ekonomisi = Home Economics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Farmasötik Toksikoloji = Pharmaceutical Toxicology','191','70')" style="color: rgb(0, 136, 204)">Farmasötik Toksikoloji = Pharmaceutical Toxicology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Felsefe = Philosophy','65','71')" style="color: rgb(0, 136, 204)">Felsefe = Philosophy</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fizik ve Fizik Mühendisliği = Physics and Physics Engineering','66','72')" style="color: rgb(0, 136, 204)">Fizik ve Fizik Mühendisliği = Physics and Physics Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fiziksel Tıp ve Rehabilitasyon = Physical Medicine and Rehabilitation','67','73')" style="color: rgb(0, 136, 204)">Fiziksel Tıp ve Rehabilitasyon = Physical Medicine and Rehabilitation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fizyoloji = Physiology','68','74')" style="color: rgb(0, 136, 204)">Fizyoloji = Physiology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fizyopatoloji = Physiopathology','69','75')" style="color: rgb(0, 136, 204)">Fizyopatoloji = Physiopathology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fizyoterapi ve Rehabilitasyon = Physiotherapy and Rehabilitation','70','76')" style="color: rgb(0, 136, 204)">Fizyoterapi ve Rehabilitasyon = Physiotherapy and Rehabilitation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Fransız Dili ve Edebiyatı = French Linguistics and Literature','71','77')" style="color: rgb(0, 136, 204)">Fransız Dili ve Edebiyatı = French Linguistics and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Gastroenteroloji = Gastroenterology','72','78')" style="color: rgb(0, 136, 204)">Gastroenteroloji = Gastroenterology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Gastronomi ve Mutfak Sanatları = Gastronomy and Culinary Arts','189','79')" style="color: rgb(0, 136, 204)">Gastronomi ve Mutfak Sanatları = Gastronomy and Culinary Arts</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Gazetecilik = Journalism','73','80')" style="color: rgb(0, 136, 204)">Gazetecilik = Journalism</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Gemi Mühendisliği = Marine Engineering','74','81')" style="color: rgb(0, 136, 204)">Gemi Mühendisliği = Marine Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Genel Cerrahi = General Surgery','75','82')" style="color: rgb(0, 136, 204)">Genel Cerrahi = General Surgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Genetik = Genetics','76','83')" style="color: rgb(0, 136, 204)">Genetik = Genetics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Geriatri = Geriatrics','77','84')" style="color: rgb(0, 136, 204)">Geriatri = Geriatrics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Gıda Mühendisliği = Food Engineering','78','85')" style="color: rgb(0, 136, 204)">Gıda Mühendisliği = Food Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Giyim Endüstrisi = Clothing Industry','79','86')" style="color: rgb(0, 136, 204)">Giyim Endüstrisi = Clothing Industry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Göğüs Cerrahisi = Thoracic Surgery','201','87')" style="color: rgb(0, 136, 204)">Göğüs Cerrahisi = Thoracic Surgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Göğüs Hastalıkları = Chest Diseases','80','88')" style="color: rgb(0, 136, 204)">Göğüs Hastalıkları = Chest Diseases</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Göğüs Kalp ve Damar Cerrahisi = Thoracic and Cardiovascular Surgery','81','89')" style="color: rgb(0, 136, 204)">Göğüs Kalp ve Damar Cerrahisi = Thoracic and Cardiovascular Surgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Göz Hastalıkları = Eye Diseases','82','90')" style="color: rgb(0, 136, 204)">Göz Hastalıkları = Eye Diseases</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Güzel Sanatlar = Fine Arts','83','91')" style="color: rgb(0, 136, 204)">Güzel Sanatlar = Fine Arts</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Halk Bilimi (Folklor) = Folklore ','84','92')" style="color: rgb(0, 136, 204)">Halk Bilimi (Folklor) = Folklore </a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Halk Sağlığı = Public Health','85','93')" style="color: rgb(0, 136, 204)">Halk Sağlığı = Public Health</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Halkla İlişkiler = Public Relations','86','94')" style="color: rgb(0, 136, 204)">Halkla İlişkiler = Public Relations</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Hastaneler = Hospitals','87','95')" style="color: rgb(0, 136, 204)">Hastaneler = Hospitals</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Hava ve Uzay Hekimliği = Air and Space Medicine','88','96')" style="color: rgb(0, 136, 204)">Hava ve Uzay Hekimliği = Air and Space Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Havacılık ve Uzay Mühendisliği = Aeronautical Engineering','89','97')" style="color: rgb(0, 136, 204)">Havacılık ve Uzay Mühendisliği = Aeronautical Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Hematoloji = Hematology','90','98')" style="color: rgb(0, 136, 204)">Hematoloji = Hematology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Hemşirelik = Nursing','91','99')" style="color: rgb(0, 136, 204)">Hemşirelik = Nursing</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Histoloji ve Embriyoloji = Histology and Embryology','92','100')" style="color: rgb(0, 136, 204)">Histoloji ve Embriyoloji = Histology and Embryology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Hukuk = Law','93','101')" style="color: rgb(0, 136, 204)">Hukuk = Law</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İç Hastalıkları = Internal diseases','179','102')" style="color: rgb(0, 136, 204)">İç Hastalıkları = Internal diseases</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İç Mimari ve Dekorasyon = Interior Design and Decoration','94','103')" style="color: rgb(0, 136, 204)">İç Mimari ve Dekorasyon = Interior Design and Decoration</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İletişim Bilimleri = Communication Sciences','95','104')" style="color: rgb(0, 136, 204)">İletişim Bilimleri = Communication Sciences</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İlk ve Acil Yardım = Emergency and First Aid','96','105')" style="color: rgb(0, 136, 204)">İlk ve Acil Yardım = Emergency and First Aid</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İngiliz Dili ve Edebiyatı = English Language and Literature','97','106')" style="color: rgb(0, 136, 204)">İngiliz Dili ve Edebiyatı = English Language and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İnşaat Mühendisliği = Civil Engineering','98','107')" style="color: rgb(0, 136, 204)">İnşaat Mühendisliği = Civil Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İstatistik = Statistics','99','108')" style="color: rgb(0, 136, 204)">İstatistik = Statistics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('İşletme = Business Administration','100','109')" style="color: rgb(0, 136, 204)">İşletme = Business Administration</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Jeodezi ve Fotogrametri = Geodesy and Photogrammetry','101','110')" style="color: rgb(0, 136, 204)">Jeodezi ve Fotogrametri = Geodesy and Photogrammetry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Jeofizik Mühendisliği = Geophysics Engineering','102','111')" style="color: rgb(0, 136, 204)">Jeofizik Mühendisliği = Geophysics Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Jeoloji Mühendisliği = Geological Engineering','103','112')" style="color: rgb(0, 136, 204)">Jeoloji Mühendisliği = Geological Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kadın Hastalıkları ve Doğum = Obstetrics and Gynecology','104','113')" style="color: rgb(0, 136, 204)">Kadın Hastalıkları ve Doğum = Obstetrics and Gynecology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kafkas Dilleri ve Edebiyatı = Caucasian Linguistics and Literature','209','114')" style="color: rgb(0, 136, 204)">Kafkas Dilleri ve Edebiyatı = Caucasian Linguistics and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kamu Yönetimi = Public Administration','105','115')" style="color: rgb(0, 136, 204)">Kamu Yönetimi = Public Administration</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kardiyoloji = Cardiology','106','116')" style="color: rgb(0, 136, 204)">Kardiyoloji = Cardiology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Karşılaştırmalı Edebiyat = Comparative Literature','107','117')" style="color: rgb(0, 136, 204)">Karşılaştırmalı Edebiyat = Comparative Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kazalar = Accidents','108','118')" style="color: rgb(0, 136, 204)">Kazalar = Accidents</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kimya = Chemistry','109','119')" style="color: rgb(0, 136, 204)">Kimya = Chemistry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kimya Mühendisliği = Chemical Engineering','110','120')" style="color: rgb(0, 136, 204)">Kimya Mühendisliği = Chemical Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Kulak Burun ve Boğaz = Otorhinolaryngology (Ear-Nose-Throat)','112','121')" style="color: rgb(0, 136, 204)">Kulak Burun ve Boğaz = Otorhinolaryngology (Ear-Nose-Throat)</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Maden Mühendisliği ve Madencilik = Mining Engineering and Mining','113','122')" style="color: rgb(0, 136, 204)">Maden Mühendisliği ve Madencilik = Mining Engineering and Mining</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Makine Mühendisliği = Mechanical Engineering','114','123')" style="color: rgb(0, 136, 204)">Makine Mühendisliği = Mechanical Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Maliye = Finance','115','124')" style="color: rgb(0, 136, 204)">Maliye = Finance</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Matbaacılık = Typography','116','125')" style="color: rgb(0, 136, 204)">Matbaacılık = Typography</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Matematik = Mathematics','117','126')" style="color: rgb(0, 136, 204)">Matematik = Mathematics</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Mekatronik Mühendisliği = Mechatronics Engineering','118','127')" style="color: rgb(0, 136, 204)">Mekatronik Mühendisliği = Mechatronics Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Metalurji Mühendisliği = Metallurgical Engineering','119','128')" style="color: rgb(0, 136, 204)">Metalurji Mühendisliği = Metallurgical Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Meteoroloji = Meteorology','120','129')" style="color: rgb(0, 136, 204)">Meteoroloji = Meteorology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Mikrobiyoloji = Microbiology','121','130')" style="color: rgb(0, 136, 204)">Mikrobiyoloji = Microbiology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Mimarlık = Architecture','122','131')" style="color: rgb(0, 136, 204)">Mimarlık = Architecture</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Moleküler Tıp = Molecular Medicine','123','132')" style="color: rgb(0, 136, 204)">Moleküler Tıp = Molecular Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Morfoloji = Morphology','124','133')" style="color: rgb(0, 136, 204)">Morfoloji = Morphology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Mühendislik Bilimleri = Engineering Sciences','125','134')" style="color: rgb(0, 136, 204)">Mühendislik Bilimleri = Engineering Sciences</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Mütercim-Tercümanlık = Translation and Interpretation','126','135')" style="color: rgb(0, 136, 204)">Mütercim-Tercümanlık = Translation and Interpretation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Müzecilik = Museology','127','136')" style="color: rgb(0, 136, 204)">Müzecilik = Museology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Müzik = Music','128','137')" style="color: rgb(0, 136, 204)">Müzik = Music</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Nefroloji = Nephrology','129','138')" style="color: rgb(0, 136, 204)">Nefroloji = Nephrology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Nöroloji = Neurology','130','139')" style="color: rgb(0, 136, 204)">Nöroloji = Neurology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Nöroşirürji = Neurosurgery','131','140')" style="color: rgb(0, 136, 204)">Nöroşirürji = Neurosurgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Nükleer Mühendislik = Nuclear Engineering','132','141')" style="color: rgb(0, 136, 204)">Nükleer Mühendislik = Nuclear Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Odyoloji = Audiology','208','142')" style="color: rgb(0, 136, 204)">Odyoloji = Audiology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Onkoloji = Oncology','133','143')" style="color: rgb(0, 136, 204)">Onkoloji = Oncology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ormancılık ve Orman Mühendisliği = Forestry and Forest Engineering','134','144')" style="color: rgb(0, 136, 204)">Ormancılık ve Orman Mühendisliği = Forestry and Forest Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ortopedi ve Travmatoloji = Orthopedics and Traumatology','135','145')" style="color: rgb(0, 136, 204)">Ortopedi ve Travmatoloji = Orthopedics and Traumatology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Otomotiv Mühendisliği = Automotive Engineering','190','146')" style="color: rgb(0, 136, 204)">Otomotiv Mühendisliği = Automotive Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Parazitoloji = Parasitology','136','147')" style="color: rgb(0, 136, 204)">Parazitoloji = Parasitology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Patoloji = Pathology','137','148')" style="color: rgb(0, 136, 204)">Patoloji = Pathology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Petrol ve Doğal Gaz Mühendisliği = Petroleum and Natural Gas Engineering','138','149')" style="color: rgb(0, 136, 204)">Petrol ve Doğal Gaz Mühendisliği = Petroleum and Natural Gas Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Peyzaj Mimarlığı = Landscape Architecture','139','150')" style="color: rgb(0, 136, 204)">Peyzaj Mimarlığı = Landscape Architecture</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Plastik ve Rekonstrüktif Cerrahi = Plastic and Reconstructive Surgery','140','151')" style="color: rgb(0, 136, 204)">Plastik ve Rekonstrüktif Cerrahi = Plastic and Reconstructive Surgery</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Polimer Bilim ve Teknolojisi = Polymer Science and Technology','141','152')" style="color: rgb(0, 136, 204)">Polimer Bilim ve Teknolojisi = Polymer Science and Technology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Psikiyatri = Psychiatry','142','153')" style="color: rgb(0, 136, 204)">Psikiyatri = Psychiatry</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Psikoloji = Psychology','143','154')" style="color: rgb(0, 136, 204)">Psikoloji = Psychology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Radyasyon Onkolojisi = Radiation Oncology','183','155')" style="color: rgb(0, 136, 204)">Radyasyon Onkolojisi = Radiation Oncology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Radyoloji ve Nükleer Tıp = Radiology and Nuclear Medicine','145','156')" style="color: rgb(0, 136, 204)">Radyoloji ve Nükleer Tıp = Radiology and Nuclear Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Radyo-Televizyon = Radio and Television','144','157')" style="color: rgb(0, 136, 204)">Radyo-Televizyon = Radio and Television</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Reklamcılık = Advertising','146','158')" style="color: rgb(0, 136, 204)">Reklamcılık = Advertising</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Romatoloji = Rheumatology','147','159')" style="color: rgb(0, 136, 204)">Romatoloji = Rheumatology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sağlık Eğitimi = Health Education','148','160')" style="color: rgb(0, 136, 204)">Sağlık Eğitimi = Health Education</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sağlık Kurumları Yönetimi = Health Care Management','149','161')" style="color: rgb(0, 136, 204)">Sağlık Kurumları Yönetimi = Health Care Management</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sağlık Yönetimi = Healthcare Management','182','162')" style="color: rgb(0, 136, 204)">Sağlık Yönetimi = Healthcare Management</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sahne ve Görüntü Sanatları = Performing and Visual Arts','150','163')" style="color: rgb(0, 136, 204)">Sahne ve Görüntü Sanatları = Performing and Visual Arts</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sanat Tarihi = Art History','151','164')" style="color: rgb(0, 136, 204)">Sanat Tarihi = Art History</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Savunma ve Savunma Teknolojileri = Defense and Defense Technologies','152','165')" style="color: rgb(0, 136, 204)">Savunma ve Savunma Teknolojileri = Defense and Defense Technologies</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Seramik Mühendisliği = Ceramic Engineering','153','166')" style="color: rgb(0, 136, 204)">Seramik Mühendisliği = Ceramic Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sigortacılık = Insurance','154','167')" style="color: rgb(0, 136, 204)">Sigortacılık = Insurance</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sivil Havacılık = Civil Aviation','155','168')" style="color: rgb(0, 136, 204)">Sivil Havacılık = Civil Aviation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Siyasal Bilimler = Political Science','156','169')" style="color: rgb(0, 136, 204)">Siyasal Bilimler = Political Science</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sosyal Hizmet = Social Work','157','170')" style="color: rgb(0, 136, 204)">Sosyal Hizmet = Social Work</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Sosyoloji = Sociology','158','171')" style="color: rgb(0, 136, 204)">Sosyoloji = Sociology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Spor = Sports','159','172')" style="color: rgb(0, 136, 204)">Spor = Sports</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Su Ürünleri = Aquatic Products','160','173')" style="color: rgb(0, 136, 204)">Su Ürünleri = Aquatic Products</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Şehircilik ve Bölge Planlama = Urban and Regional Planning','161','174')" style="color: rgb(0, 136, 204)">Şehircilik ve Bölge Planlama = Urban and Regional Planning</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Tarih = History','162','175')" style="color: rgb(0, 136, 204)">Tarih = History</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Teknik Eğitim = Technical Education','163','176')" style="color: rgb(0, 136, 204)">Teknik Eğitim = Technical Education</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Tekstil ve Tekstil Mühendisliği = Textile and Textile Engineering','164','177')" style="color: rgb(0, 136, 204)">Tekstil ve Tekstil Mühendisliği = Textile and Textile Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Tıbbi Biyoloji = Medical Biology','165','178')" style="color: rgb(0, 136, 204)">Tıbbi Biyoloji = Medical Biology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Tıbbi Ekoloji ve Klimatoloji = Medical Ecology and Climatology','166','179')" style="color: rgb(0, 136, 204)">Tıbbi Ekoloji ve Klimatoloji = Medical Ecology and Climatology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Trafik = Traffic','167','180')" style="color: rgb(0, 136, 204)">Trafik = Traffic</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Turizm = Tourism','168','181')" style="color: rgb(0, 136, 204)">Turizm = Tourism</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Türk Dili ve Edebiyatı = Turkish Language and Literature','169','182')" style="color: rgb(0, 136, 204)">Türk Dili ve Edebiyatı = Turkish Language and Literature</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Türk İnkılap Tarihi = History of Turkish Revolution','170','183')" style="color: rgb(0, 136, 204)">Türk İnkılap Tarihi = History of Turkish Revolution</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Uçak Mühendisliği = Aeronautical Engineering','171','184')" style="color: rgb(0, 136, 204)">Uçak Mühendisliği = Aeronautical Engineering</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ulaşım = Transportation','172','185')" style="color: rgb(0, 136, 204)">Ulaşım = Transportation</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Uluslararası İlişkiler = International Relations','173','186')" style="color: rgb(0, 136, 204)">Uluslararası İlişkiler = International Relations</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Uluslararası Ticaret = International Trade','206','187')" style="color: rgb(0, 136, 204)">Uluslararası Ticaret = International Trade</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Uyuşturucu Alışkanlığı ve Alkolizm = Drug Addiction and Alcoholism','174','188')" style="color: rgb(0, 136, 204)">Uyuşturucu Alışkanlığı ve Alkolizm = Drug Addiction and Alcoholism</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Üroloji = Urology','175','189')" style="color: rgb(0, 136, 204)">Üroloji = Urology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Veteriner Hekimliği = Veterinary Medicine','176','190')" style="color: rgb(0, 136, 204)">Veteriner Hekimliği = Veterinary Medicine</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Yönetim Bilişim Sistemleri = Management Information Systems','202','191')" style="color: rgb(0, 136, 204)">Yönetim Bilişim Sistemleri = Management Information Systems</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Ziraat = Agriculture','177','192')" style="color: rgb(0, 136, 204)">Ziraat = Agriculture</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+	<tr class="renka">
+	 
+		<td colspan="2">
+			
+			<a href="javascript:eklecikar('Zooloji = Zoology','178','193')" style="color: rgb(0, 136, 204)">Zooloji = Zoology</a> 
+			
+</td>
+ 
+	</tr>
+ 
+	 
+</tbody>
+
+</table>
+
+      		
+
+
+</body>
+</html>

@@ -1,0 +1,3641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0051)https://tez.yok.gov.tr/UlusalTezMerkezi/SearchDizin -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Ulusal Tez Merkezi | Dizin Seçimi</title>
+	
+
+  <link href="./Ulusal Tez Merkezi _ Dizin Seçimi_files/styles.css" rel="stylesheet" type="text/css">
+<link href="./Ulusal Tez Merkezi _ Dizin Seçimi_files/ustMenu.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./Ulusal Tez Merkezi _ Dizin Seçimi_files/style.css" type="text/css" media="all">
+
+<script language="JavaScript" src="./Ulusal Tez Merkezi _ Dizin Seçimi_files/genel_son.js.download"></script>
+	<script type="text/javascript" src="./Ulusal Tez Merkezi _ Dizin Seçimi_files/jquery.jcarousel.pack.js.download"></script>
+	<script type="text/javascript" src="./Ulusal Tez Merkezi _ Dizin Seçimi_files/func.js.download"></script>
+	<script type="text/javascript" src="./Ulusal Tez Merkezi _ Dizin Seçimi_files/table.js.download"></script>
+	<link rel="stylesheet" href="./Ulusal Tez Merkezi _ Dizin Seçimi_files/demos.css">
+
+
+
+
+
+<!-- Google tag (gtag.js) -->
+<script async="" src="./Ulusal Tez Merkezi _ Dizin Seçimi_files/js"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+	gtag('config', 'G-X9KNJ1MYD7');
+</script>
+
+<script type="text/javascript">
+function pageexample(page) {
+	var t = document.getElementById('page');
+	var res;
+	if (page=="previous") {
+		res=Table.pagePrevious(t);
+	}
+	else if (page=="next") {
+		res=Table.pageNext(t);
+	}
+	else {
+		res=Table.page(t,page);
+	}
+	var currentPage = res.page+1;
+	$('.pagelink').removeClass('currentpage');
+	$('#page'+currentPage).addClass('currentpage');
+}
+function eklecikar(deger,kod,alanNo) {
+	var veri = window.parent.document.GForm.Dizin0.value ;
+	var veriId = window.parent.document.GForm.dizinIdler.value ;
+	
+		 veri = veri.replace(/\r/g, "");
+		 veriId = veriId.replace(/\r/g, "");
+		 
+	if(veri != "" ) {
+		veri = veri.replace(/\r/g, "\n");
+		veri = "|"+veri.replace(/\n/g, "#|") + "#";
+	}
+	var deger = "|"+deger+"#";
+	if(veriId != "" ) {
+		veriId = veriId.replace(/\r/g, "\n");
+		veriId = "|"+veriId.replace(/\n/g, "#|") + "#";
+	}
+	var kod = "|"+kod+"#";
+	
+	if ( veri.indexOf(deger,0) > -1 ) { 
+	yeniveri = veri.replace(deger, "") ;
+	yeniId=veriId.replace(kod, "") ;
+	}
+	else {	
+	yeniveri = veri + deger ;
+	yeniId=veriId + kod;
+	}
+	yeniveri = yeniveri.replace(/[|]/g, "");
+	yeniveri = yeniveri.substr(0,yeniveri.length-1) ;
+	
+	yeniId = yeniId.replace(/[|]/g, "");
+	yeniId = yeniId.substr(0,yeniId.length-1) ;
+	var ysayi = yeniveri.split("#");
+	if ( ysayi.length > 10 ) 
+	alert("10 Dizin başlığı verebilirsiniz.") ;
+	else {
+	window.parent.document.GForm.Dizin0.value = yeniveri.replace(/#/g, "\n");
+	window.parent.document.GForm.dizinIdler.value =  yeniId.replace(/#/g, "\n");
+	 var target = document.getElementById("TextArea"+alanNo);
+    if( target.style.border == "1px solid red" ) {
+        target.style.border = "none";
+    } else {
+//         target.style.fontWeight = "bolder";
+//         target.style.color = "#FF0000";
+        target.style.border = "1px solid red";
+//         target.style.color = "#FF0000";
+    }
+	}
+	}
+
+
+function eklecikar1(deger){
+	sayi = window.parent.document.GForm.Dizin0.value ;
+	var ysayi = sayi.split("\n");
+	var yysayi = "";
+	var varyok=0;
+	for(var i=0;i < ysayi.length-1 ;i++) {
+	//alert(deger.length + "  deger" + ysayi[i].substr(0, ysayi[i].length-1))
+	if ( deger != ysayi[i].substr(0, ysayi[i].length-1) ) { yysayi += ysayi[i] ;varyok=varyok+1; }
+	} //for
+	if(varyok==ysayi.length-1 && varyok < 10) { yysayi += deger + "\n" }
+	if ( varyok == 10 ) { alert("10 dizin başlığı verebilirsiniz.") }
+	window.parent.document.GForm.Dizin0.value = yysayi
+}
+
+</script>
+
+<style>
+    form > table,
+    body > table {
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100% !important;
+        border-collapse: collapse;
+    }
+
+    td {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        vertical-align: top;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    td a {
+        display: inline-block;
+        max-width: 100%;
+/*         word-break: break-all; */
+    }
+
+    .renkbas td {
+        background-color: #ffffff !important;
+        color: #ff5252 !important;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 20px 15px;
+        border-bottom: 1px solid #eee;
+        text-align: left !important;
+    }
+
+    .renka td {
+        background-color: #ffffff !important;
+        padding: 15px;
+        font-size: 13px;
+        color: #666;
+        border-bottom: 1px solid #f2f2f2;
+        transition: background 0.2s;
+    }
+
+    .renka:hover td {
+        background-color: #fafafa !important;
+    }
+
+    .renktablobas a {
+        color: #ff5252 !important;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 5px 12px;
+        background-color: #fff1f1;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        display: inline-block;
+        margin: 0 4px;
+        border: 1px solid transparent;
+    }
+
+    .renktablobas a:hover {
+        background-color: #ff5252;
+        color: #ffffff !important;
+        transform: translateY(-1px); /* Subtle lift effect */
+    }
+
+    .renktablobas {
+        padding: 12px !important;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #eee;
+    }
+
+    .count-text {
+        display: inline-block;
+        margin-right: 15px;
+        color: #999;
+        font-size: 11px;
+        font-weight: normal;
+    }
+
+    input[type="text"], .alanlar {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #ff5252;
+    }
+
+    .buton, input[type="button"], input[type="submit"] {
+        background-color: #ff5252;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: opacity 0.2s;
+    }
+
+    .buton:hover {
+        opacity: 0.9;
+    }
+
+    a {
+        color: #ff5252;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    body {
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+</head>
+
+<body>
+
+	
+	<table>
+	<tbody><tr class="renka">
+	<td>
+	<form name="dizin" method="post" action="https://tez.yok.gov.tr/UlusalTezMerkezi/SearchDizin">
+	<table>
+<tbody><tr class="renka">
+	<td style="padding: 10px"><select size="1" name="grup">
+				<option value="" selected="selected">Grubu</option>
+				<option title="Fen" value="F">Fen</option>
+				<option title="Sosyal" value="S">Sosyal</option>
+				<option title="Tıp" value="T">Tıp</option>
+			</select>
+<!-- 	</td> -->
+<!-- 	<td> -->
+        <select size="1" name="ilkHarf">
+								<option value="">Tümü 						</option>
+			
+			<option value="1">
+			
+			1  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="2">
+			
+			2  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="3">
+			
+			3  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="4">
+			
+			4  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="5">
+			
+			5  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="6">
+			
+			6  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="7">
+			
+			7  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="8">
+			
+			8  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="9">
+			
+			9  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="A">
+			
+			A  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="B">
+			
+			B  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="C">
+			
+			C  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Ç">
+			
+			Ç  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="D">
+			
+			D  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="E">
+			
+			E  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="F">
+			
+			F  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="G">
+			
+			G  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="H">
+			
+			H  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="I">
+			
+			I  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="İ">
+			
+			İ  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="J">
+			
+			J  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="K">
+			
+			K  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="L">
+			
+			L  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="M">
+			
+			M  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="N">
+			
+			N  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="O">
+			
+			O  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Ö">
+			
+			Ö  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="P">
+			
+			P  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="R">
+			
+			R  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="S">
+			
+			S  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Ş">
+			
+			Ş  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="T">
+			
+			T  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="U">
+			
+			U  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Ü">
+			
+			Ü  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="V">
+			
+			V  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Y">
+			
+			Y  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Z">
+			
+			Z  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="X">
+			
+			X  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="W">
+			
+			W  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			<option value="Q">
+			
+			Q  ile başlayan Dizinler
+			
+			</option>
+			
+			
+			</select>
+			
+			<select size="1" name="dil">
+								<option value="0">Tümünde</option>
+			 
+			<option value="1">Türkçede</option>
+			<option value="2">İngilizcede</option>
+		 
+			</select>
+			<input type="text" name="aranan" size="25" value="" title="Arayacağınız kelimeyi yazın. (Büyük küçük harf duyarlıdır)">
+			<select name="tip2">
+			 <option value="2">Kelimenin içinde geçsin</option>
+							<option value="1">Sadece yazılan şekilde</option>
+                           
+							
+							 
+			</select>
+			<input type="hidden" name="islem" value="1">
+			<input type="submit" value="  Bul  " class="buton">
+			</td>
+			</tr>
+			
+	</tbody></table>
+	</form>
+	</td>
+	</tr>
+	<tr>
+
+      		
+      		<td width="100%" valign="top">
+      		
+      		
+      		<table class="example table-autopage:34 table-stripeclass:alternate" id="page" width="100%">
+
+
+<thead>
+
+
+<tr>	<td align="center" class="renktablobas" colspan="3"><span class="count-text">Arama Tipi(Search Type):İçinde geçsin Aranan Dil(Language):Tümünde--&gt;97534 kayıt bulundu. </span></td>
+</tr>
+<tr>
+<td class="renktablobas" align="center" colspan="3">
+		<a href="https://tez.yok.gov.tr/UlusalTezMerkezi/SearchDizin#" style="font-size: 12px; color: #ffffff" onclick="pageexample(&#39;previous&#39;); return false;">&lt;&lt;&nbsp;Önceki</a>
+		
+		
+		
+		<a href="https://tez.yok.gov.tr/UlusalTezMerkezi/SearchDizin#" style="font-size: 12px;color: #ffffff" onclick="pageexample(&#39;next&#39;); return false;">Sonraki&nbsp;&gt;&gt;</a>
+	</td>
+	
+	</tr>
+	
+</thead>
+<tbody>
+
+
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea0">
+			
+			
+					<a href="javascript:eklecikar(&#39;β- hidroksibütirik asit = β-hydroxybutyric acid&#39;,&#39;94964&#39;,&#39;0&#39;)">
+                        
+                        β- hidroksibütirik asit
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea1">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Capital gazetesi = A Capital newspaper&#39;,&#39;90672&#39;,&#39;1&#39;)">
+                        
+                        A Capital gazetesi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea2">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Clergyman\&#39;s Daughter = A Clergyman\&#39;s Daughter&#39;,&#39;291&#39;,&#39;2&#39;)">
+                        
+                        A Clergyman\'s Daughter
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea3">
+			
+			
+					<a href="javascript:eklecikar(&#39;A dergisi = A Journal&#39;,&#39;292&#39;,&#39;3&#39;)">
+                        
+                        A dergisi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea4">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Grammar of the Turkish Language = A Grammar of the Turkish Language&#39;,&#39;85538&#39;,&#39;4&#39;)">
+                        
+                        A Grammar of the Turkish Language
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea5">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Mediterranean Society = A Mediterranean Society&#39;,&#39;293&#39;,&#39;5&#39;)">
+                        
+                        A Mediterranean Society
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea6">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Midsummer Night\&#39;s Dream = A Midsummer Night\&#39;s Dream&#39;,&#39;294&#39;,&#39;6&#39;)">
+                        
+                        A Midsummer Night\'s Dream
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea7">
+			
+			
+					<a href="javascript:eklecikar(&#39;A posteriori = A posteriori&#39;,&#39;94869&#39;,&#39;7&#39;)">
+                        
+                        A posteriori
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea8">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Sex-War Opera = A Sex-War Opera&#39;,&#39;295&#39;,&#39;8&#39;)">
+                        
+                        A Sex-War Opera
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea9">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Streetcar Named Desire = A Streetcar Named Desire&#39;,&#39;297&#39;,&#39;9&#39;)">
+                        
+                        A Streetcar Named Desire
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea10">
+			
+			
+					<a href="javascript:eklecikar(&#39;A Takımı = A Team&#39;,&#39;298&#39;,&#39;10&#39;)">
+                        
+                        A Takımı
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea11">
+			
+			
+					<a href="javascript:eklecikar(&#39;Aalto, Alvar = Aalto, Alvar&#39;,&#39;2549&#39;,&#39;11&#39;)">
+                        
+                        Aalto, Alvar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea12">
+			
+			
+					<a href="javascript:eklecikar(&#39;Aarhus Sözleşmesi = Aarhus Convention&#39;,&#39;77969&#39;,&#39;12&#39;)">
+                        
+                        Aarhus Sözleşmesi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea13">
+			
+			
+					<a href="javascript:eklecikar(&#39;Aarnio, Aulis = Aarnio, Aulis&#39;,&#39;94417&#39;,&#39;13&#39;)">
+                        
+                        Aarnio, Aulis
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea14">
+			
+			
+					<a href="javascript:eklecikar(&#39;AASHTO standardı = AASHTO standard&#39;,&#39;302&#39;,&#39;14&#39;)">
+                        
+                        AASHTO standardı
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea15">
+			
+			
+					<a href="javascript:eklecikar(&#39;AASHTO yöntemi = AASHTO method&#39;,&#39;303&#39;,&#39;15&#39;)">
+                        
+                        AASHTO yöntemi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea16">
+			
+			
+					<a href="javascript:eklecikar(&#39;Ab initio = Ab initio&#39;,&#39;304&#39;,&#39;16&#39;)">
+                        
+                        Ab initio
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea17">
+			
+			
+					<a href="javascript:eklecikar(&#39;A/B tipi davranış örüntüsü = Type A/B behavior pattern&#39;,&#39;301&#39;,&#39;17&#39;)">
+                        
+                        A/B tipi davranış örüntüsü
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea18">
+			
+			
+					<a href="javascript:eklecikar(&#39;Aba = Aba&#39;,&#39;103013&#39;,&#39;18&#39;)">
+                        
+                        Aba
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea19">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abacı, Necati = Abacı, Necati&#39;,&#39;86065&#39;,&#39;19&#39;)">
+                        
+                        Abacı, Necati
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea20">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abacıoğlu hanı = &#39;,&#39;307&#39;,&#39;20&#39;)">
+                        
+                        Abacıoğlu hanı
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea21">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaç, Celal = Abaç, Celal&#39;,&#39;83069&#39;,&#39;21&#39;)">
+                        
+                        Abaç, Celal
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea22">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaç, Nuri = Abaç, Nuri&#39;,&#39;308&#39;,&#39;22&#39;)">
+                        
+                        Abaç, Nuri
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea23">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abadan Unat, Nermin = Abadan Unat, Nermin&#39;,&#39;71300&#39;,&#39;23&#39;)">
+                        
+                        Abadan Unat, Nermin
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea24">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaka = Abaca&#39;,&#39;101600&#39;,&#39;24&#39;)">
+                        
+                        Abaka
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea25">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaka Han = Abaka Khan&#39;,&#39;90972&#39;,&#39;25&#39;)">
+                        
+                        Abaka Han
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea26">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abakavir = Abacavir&#39;,&#39;101554&#39;,&#39;26&#39;)">
+                        
+                        Abakavir
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea27">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abalıoğlu, Kamil = Abalıoğlu, Kamil&#39;,&#39;96415&#39;,&#39;27&#39;)">
+                        
+                        Abalıoğlu, Kamil
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea28">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abanoz yaylası = Abanoz high plateau&#39;,&#39;309&#39;,&#39;28&#39;)">
+                        
+                        Abanoz yaylası
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea29">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abant Gölü = Abant Lake&#39;,&#39;310&#39;,&#39;29&#39;)">
+                        
+                        Abant Gölü
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea30">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abant İzzet Baysal Üniversitesi = Abant İzzet Baysal University&#39;,&#39;311&#39;,&#39;30&#39;)">
+                        
+                        Abant İzzet Baysal Üniversitesi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea31">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abant Tabiat Parkı = Abant Nature Park&#39;,&#39;312&#39;,&#39;31&#39;)">
+                        
+                        Abant Tabiat Parkı
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea32">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abartı = Exaggeration&#39;,&#39;78193&#39;,&#39;32&#39;)">
+                        
+                        Abartı
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea33">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abasıyanık, Sait Faik = Abasıyanık, Sait Faik&#39;,&#39;313&#39;,&#39;33&#39;)">
+                        
+                        Abasıyanık, Sait Faik
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea34">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaşidze, Aslan = Abaşidze, Aslan&#39;,&#39;314&#39;,&#39;34&#39;)">
+                        
+                        Abaşidze, Aslan
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea35">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abatasept = Abatacept&#39;,&#39;106602&#39;,&#39;35&#39;)">
+                        
+                        Abatasept
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea36">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abay Yolu = Abay Yolu&#39;,&#39;315&#39;,&#39;36&#39;)">
+                        
+                        Abay Yolu
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea37">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaza Hasan Paşa = Abaza Hasan Pasha&#39;,&#39;316&#39;,&#39;37&#39;)">
+                        
+                        Abaza Hasan Paşa
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea38">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abaza Mehmet Paşa = Abaza Mehmet Pasha&#39;,&#39;317&#39;,&#39;38&#39;)">
+                        
+                        Abaza Mehmet Paşa
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea39">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abazaca = Abazin&#39;,&#39;81433&#39;,&#39;39&#39;)">
+                        
+                        Abazaca
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea40">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abazalar = Abazas&#39;,&#39;318&#39;,&#39;40&#39;)">
+                        
+                        Abazalar
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea41">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbad b. Mansur = Abbad b. Mansur&#39;,&#39;93296&#39;,&#39;41&#39;)">
+                        
+                        Abbad b. Mansur
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea42">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbad b. Süleyman = Abbad b. Süleyman&#39;,&#39;81265&#39;,&#39;42&#39;)">
+                        
+                        Abbad b. Süleyman
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea43">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbadiler = Abbadis&#39;,&#39;97585&#39;,&#39;43&#39;)">
+                        
+                        Abbadiler
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea44">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbaralar = Abbaras&#39;,&#39;107227&#39;,&#39;44&#39;)">
+                        
+                        Abbaralar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea45">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbas, Akil = Abbas, Akil&#39;,&#39;93174&#39;,&#39;45&#39;)">
+                        
+                        Abbas, Akil
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea46">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbas b. Abdülmuttalib = Abbas b. Abdülmuttalib&#39;,&#39;319&#39;,&#39;46&#39;)">
+                        
+                        Abbas b. Abdülmuttalib
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea47">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbas, Ebzar = Abbas, Ebzar&#39;,&#39;103018&#39;,&#39;47&#39;)">
+                        
+                        Abbas, Ebzar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea48">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbas Mahmud el-Akkad = Abbas Mahmud el-Akkad&#39;,&#39;72583&#39;,&#39;48&#39;)">
+                        
+                        Abbas Mahmud el-Akkad
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea49">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbas Vesim = Abbas Vesim&#39;,&#39;86182&#39;,&#39;49&#39;)">
+                        
+                        Abbas Vesim
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea50">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbasi Devleti = Abbasid State&#39;,&#39;320&#39;,&#39;50&#39;)">
+                        
+                        Abbasi Devleti
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea51">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbasiler = Abbasids&#39;,&#39;321&#39;,&#39;51&#39;)">
+                        
+                        Abbasiler
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea52">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbasiler Dönemi = Abbasid Periods&#39;,&#39;322&#39;,&#39;52&#39;)">
+                        
+                        Abbasiler Dönemi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea53">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbaskulu Ağa Bakühanlı = Abbaskulu Ağa Bakühanlı&#39;,&#39;86757&#39;,&#39;53&#39;)">
+                        
+                        Abbaskulu Ağa Bakühanlı
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea54">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbaszade = Abbaszade&#39;,&#39;323&#39;,&#39;54&#39;)">
+                        
+                        Abbaszade
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea55">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbey, Edward = Abbey, Edward&#39;,&#39;96834&#39;,&#39;55&#39;)">
+                        
+                        Abbey, Edward
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea56">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbey Tiyatrosu = Abbey Theatre&#39;,&#39;69846&#39;,&#39;56&#39;)">
+                        
+                        Abbey Tiyatrosu
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea57">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbott, James = Abbott, James&#39;,&#39;101097&#39;,&#39;57&#39;)">
+                        
+                        Abbott, James
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea58">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abbott, Nabia = Abbott, Nabia&#39;,&#39;74008&#39;,&#39;58&#39;)">
+                        
+                        Abbott, Nabia
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea59">
+			
+			
+					<a href="javascript:eklecikar(&#39;ABC analizi = ABC method&#39;,&#39;324&#39;,&#39;59&#39;)">
+                        
+                        ABC analizi (bknz:Aktiviteye dayalı muhasebe)
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea60">
+			
+			
+					<a href="javascript:eklecikar(&#39;ABC envanter sınıflandırması = ABC  inventory classification&#39;,&#39;325&#39;,&#39;60&#39;)">
+                        
+                        ABC envanter sınıflandırması
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea61">
+			
+			
+					<a href="javascript:eklecikar(&#39;ABCD Modeli = ABCD Model&#39;,&#39;73186&#39;,&#39;61&#39;)">
+                        
+                        ABCD Modeli
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea62">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abd el-Gani bin Abd el-Celil Geredevi = Abd el-Gani bin Abd el-Celil Geredevi&#39;,&#39;95790&#39;,&#39;62&#39;)">
+                        
+                        Abd el-Gani bin Abd el-Celil Geredevi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea63">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdal Çayı Havzası = Abdal Stream Basin&#39;,&#39;82239&#39;,&#39;63&#39;)">
+                        
+                        Abdal Çayı Havzası
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea64">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdal Musa = Abdal Musa&#39;,&#39;326&#39;,&#39;64&#39;)">
+                        
+                        Abdal Musa
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea65">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdalan-ı Rum = Abdalan-ı Rum&#39;,&#39;327&#39;,&#39;65&#39;)">
+                        
+                        Abdalan-ı Rum
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea66">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdalhasan Külliyesi = Abdalhasan Complex&#39;,&#39;328&#39;,&#39;66&#39;)">
+                        
+                        Abdalhasan Külliyesi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea67">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdaliler = Abdalis&#39;,&#39;75962&#39;,&#39;67&#39;)">
+                        
+                        Abdaliler
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea68">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdallar = Abdals&#39;,&#39;330&#39;,&#39;68&#39;)">
+                        
+                        Abdallar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea69">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abda\&#39;ul-Beyan = Abda al-Bayan&#39;,&#39;106389&#39;,&#39;69&#39;)">
+                        
+                        Abda\'ul-Beyan
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea70">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abderi = Abderi&#39;,&#39;331&#39;,&#39;70&#39;)">
+                        
+                        Abderi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea71">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdest = Ablution&#39;,&#39;332&#39;,&#39;71&#39;)">
+                        
+                        Abdest
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea72">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdestbozan otu = Sarcopoterium spinosum&#39;,&#39;333&#39;,&#39;72&#39;)">
+                        
+                        Abdestbozan otu
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea73">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdıkalıoğlu Uulu, Şemsuddin = Abdikalik Uulu, Shamsuddin&#39;,&#39;107127&#39;,&#39;73&#39;)">
+                        
+                        Abdıkalıoğlu Uulu, Şemsuddin
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea74">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdi = Abdi&#39;,&#39;334&#39;,&#39;74&#39;)">
+                        
+                        Abdi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea75">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdi, Behzad = Abdi, Behzad&#39;,&#39;100246&#39;,&#39;75&#39;)">
+                        
+                        Abdi, Behzad
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea76">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdi Bey Şirazi = Abdi Bey Şirazi&#39;,&#39;86745&#39;,&#39;76&#39;)">
+                        
+                        Abdi Bey Şirazi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea77">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdi Musa = Abdi Musa&#39;,&#39;335&#39;,&#39;77&#39;)">
+                        
+                        Abdi Musa
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea78">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdi-i Karahisari = Abdi-i Karahisari&#39;,&#39;336&#39;,&#39;78&#39;)">
+                        
+                        Abdi-i Karahisari
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea79">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdik, Tölen = Abdik, Tölen&#39;,&#39;103438&#39;,&#39;79&#39;)">
+                        
+                        Abdik, Tölen
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea80">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdomen = Abdomen&#39;,&#39;337&#39;,&#39;80&#39;)">
+                        
+                        Abdomen
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea81">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdomen-akut = Abdomen-acute&#39;,&#39;338&#39;,&#39;81&#39;)">
+                        
+                        Abdomen-akut
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea82">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdominal duvar = Abdominal wall&#39;,&#39;339&#39;,&#39;82&#39;)">
+                        
+                        Abdominal duvar
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea83">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdominal kaslar = Abdominal muscles&#39;,&#39;82689&#39;,&#39;83&#39;)">
+                        
+                        Abdominal kaslar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea84">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdominal neoplazmlar = Abdominal neoplasms&#39;,&#39;340&#39;,&#39;84&#39;)">
+                        
+                        Abdominal neoplazmlar
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea85">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdominal yağ = &#39;,&#39;341&#39;,&#39;85&#39;)">
+                        
+                        Abdominal yağ (bknz:Karın yağı)
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea86">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdominal yaralanmalar = Abdominal injuries&#39;,&#39;79202&#39;,&#39;86&#39;)">
+                        
+                        Abdominal yaralanmalar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea87">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abducens siniri = Abducens nerve&#39;,&#39;344&#39;,&#39;87&#39;)">
+                        
+                        Abducens siniri
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea88">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abduh er-Racihi = Abduh er-Racihi&#39;,&#39;69814&#39;,&#39;88&#39;)">
+                        
+                        Abduh er-Racihi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea89">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulahad Nuri = Abdulahad Nuri&#39;,&#39;346&#39;,&#39;89&#39;)">
+                        
+                        Abdulahad Nuri
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea90">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulaziz Çaviş = Abdulaziz Çaviş&#39;,&#39;348&#39;,&#39;90&#39;)">
+                        
+                        Abdulaziz Çaviş
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea91">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulaziz el-Zemzemi = Abdulaziz al-Zamzami&#39;,&#39;102438&#39;,&#39;91&#39;)">
+                        
+                        Abdulaziz el-Zemzemi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea92">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulbaki, Sabit = Abdulbaki, Sabit&#39;,&#39;350&#39;,&#39;92&#39;)">
+                        
+                        Abdulbaki, Sabit
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea93">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulbaki Tebrizi = Abdulbaki Tabrizs&#39;,&#39;349&#39;,&#39;93&#39;)">
+                        
+                        Abdulbaki Tebrizi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea94">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulfettah et-Temimi = Abdulfettah et-Temimi&#39;,&#39;86463&#39;,&#39;94&#39;)">
+                        
+                        Abdulfettah et-Temimi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea95">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulfettah Şefkat Efendi = Abdulfettah Şefkat Efendi&#39;,&#39;80362&#39;,&#39;95&#39;)">
+                        
+                        Abdulfettah Şefkat Efendi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea96">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdul-Gaffar = Abdul-Gaffar&#39;,&#39;104454&#39;,&#39;96&#39;)">
+                        
+                        Abdul-Gaffar
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea97">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulgaffar Cami = Abdulgaffar Mosque&#39;,&#39;75898&#39;,&#39;97&#39;)">
+                        
+                        Abdulgaffar Cami
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea98">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhadi el-Araşki = Abdulhadi el-Araşki&#39;,&#39;79663&#39;,&#39;98&#39;)">
+                        
+                        Abdulhadi el-Araşki (bknz:Kaya, Abdulhadi)
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea99">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhakim ed-Derşevi = Abdulhakim ed-Derşevi&#39;,&#39;96317&#39;,&#39;99&#39;)">
+                        
+                        Abdulhakim ed-Derşevi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea100">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhakim el-Hüseyni = Abdulhakim el-Hüseyni&#39;,&#39;105698&#39;,&#39;100&#39;)">
+                        
+                        Abdulhakim el-Hüseyni
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea101">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhamid b. Hadduka = Abdulhamid b. Hadduka&#39;,&#39;73267&#39;,&#39;101&#39;)">
+                        
+                        Abdulhamid b. Hadduka
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea102">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhamid bin Yahya = Abdulhamid bin Yahya&#39;,&#39;352&#39;,&#39;102&#39;)">
+                        
+                        Abdulhamid bin Yahya
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea103">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhamid Cevde el-Sahhar = Abdel Hamid Gouda al-Sahhar&#39;,&#39;88627&#39;,&#39;103&#39;)">
+                        
+                        Abdulhamid Cevde el-Sahhar
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea104">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhamid Cude es-Sahhar = Abdulhamid Cude es-Sahhar&#39;,&#39;82326&#39;,&#39;104&#39;)">
+                        
+                        Abdulhamid Cude es-Sahhar
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea105">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhamid I külliyesi = Abdulhamid I külliyesi&#39;,&#39;353&#39;,&#39;105&#39;)">
+                        
+                        Abdulhamid I külliyesi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea106">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulhay Luknovi = Abdulhay Luknovi&#39;,&#39;354&#39;,&#39;106&#39;)">
+                        
+                        Abdulhay Luknovi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea107">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdu\&#39;l-Hayy el-Leknevi = Abdu\&#39;l-Hayy el-Leknevi&#39;,&#39;343&#39;,&#39;107&#39;)">
+                        
+                        Abdu\'l-Hayy el-Leknevi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea108">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulilah Abdulkadir = Abdulilah Abdulkadir&#39;,&#39;105362&#39;,&#39;108&#39;)">
+                        
+                        Abdulilah Abdulkadir
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea109">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir Belhi = Abdulkadir Belhi&#39;,&#39;88405&#39;,&#39;109&#39;)">
+                        
+                        Abdulkadir Belhi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea110">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir bin Muhyiddin el–Erbili = Abdulkadir bin Muhyiddin el–Erbili&#39;,&#39;72428&#39;,&#39;110&#39;)">
+                        
+                        Abdulkadir bin Muhyiddin el–Erbili
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea111">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir Çelebi = Abdulkadir Çelebi&#39;,&#39;355&#39;,&#39;111&#39;)">
+                        
+                        Abdulkadir Çelebi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea112">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir el Bağdadi = Abdulkadir el Bağdadi&#39;,&#39;356&#39;,&#39;112&#39;)">
+                        
+                        Abdulkadir el Bağdadi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea113">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir el-Curcani = Abdulkadir el-Curcani&#39;,&#39;357&#39;,&#39;113&#39;)">
+                        
+                        Abdulkadir el-Curcani
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea114">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir el-Hısni = Abdulkadir el-Hısni&#39;,&#39;85990&#39;,&#39;114&#39;)">
+                        
+                        Abdulkadir el-Hısni
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea115">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir İzmiri = Abdulkadir İzmiri&#39;,&#39;88338&#39;,&#39;115&#39;)">
+                        
+                        Abdulkadir İzmiri
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea116">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir Kuraşi = Abdulkadir Kuraşi&#39;,&#39;358&#39;,&#39;116&#39;)">
+                        
+                        Abdulkadir Kuraşi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea117">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkadir Meragi = Abdulkadir Meragi&#39;,&#39;359&#39;,&#39;117&#39;)">
+                        
+                        Abdulkadir Meragi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea118">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkerim b. Acred = Abdulkerim b. Acred&#39;,&#39;85167&#39;,&#39;118&#39;)">
+                        
+                        Abdulkerim b. Acred
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea119">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkerim el-Cili = Abdulkerim el-Cili&#39;,&#39;360&#39;,&#39;119&#39;)">
+                        
+                        Abdulkerim el-Cili
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea120">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkerim el-Hatib = Abdulkarim al-Khateeb\&#39;s&#39;,&#39;75097&#39;,&#39;120&#39;)">
+                        
+                        Abdulkerim el-Hatib
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea121">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulkerim, Muhammed = Abdulkerim, Muhammed&#39;,&#39;75951&#39;,&#39;121&#39;)">
+                        
+                        Abdulkerim, Muhammed
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea122">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdu\&#39;l-Kuddüs, İhsan = Abdu\&#39;l-Kuddus, İhsan&#39;,&#39;75525&#39;,&#39;122&#39;)">
+                        
+                        Abdu\'l-Kuddüs, İhsan
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea123">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdulla, Kamal = Abdulla, Kamal&#39;,&#39;89973&#39;,&#39;123&#39;)">
+                        
+                        Abdulla, Kamal
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea124">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullaev, Chingiz = Abdullaev, Chingiz&#39;,&#39;75533&#39;,&#39;124&#39;)">
+                        
+                        Abdullaev, Chingiz
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea125">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah B. Ali Süveydan = Abdullah B. Ali Süveydan&#39;,&#39;90324&#39;,&#39;125&#39;)">
+                        
+                        Abdullah B. Ali Süveydan
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea126">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Fudi = Abdullah b. Fodio&#39;,&#39;88069&#39;,&#39;126&#39;)">
+                        
+                        Abdullah b. Fudi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea127">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Muğaffel = Abdullah b. Mugaffel&#39;,&#39;73314&#39;,&#39;127&#39;)">
+                        
+                        Abdullah b. Muğaffel
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea128">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah B. Mustafa Elbistani = Abdullah B. Mustafa Elbistani&#39;,&#39;82096&#39;,&#39;128&#39;)">
+                        
+                        Abdullah B. Mustafa Elbistani
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea129">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Revaha = Abdullah b. Revaha&#39;,&#39;94595&#39;,&#39;129&#39;)">
+                        
+                        Abdullah b. Revaha
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea130">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Sebe = Abdullah b. Sebe&#39;,&#39;361&#39;,&#39;130&#39;)">
+                        
+                        Abdullah b. Sebe
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea131">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Vehb = Abdullah b. Vehb&#39;,&#39;86684&#39;,&#39;131&#39;)">
+                        
+                        Abdullah b. Vehb
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea132">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah b. Yusuf el-Cüveyni = Abdullah b. Yusuf el-Cüveyni&#39;,&#39;74338&#39;,&#39;132&#39;)">
+                        
+                        Abdullah b. Yusuf el-Cüveyni
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea133">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin = &#39;,&#39;90675&#39;,&#39;133&#39;)">
+                        
+                        Abdullah bin
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea134">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Abbas = Abdullah bin Abbas&#39;,&#39;90674&#39;,&#39;134&#39;)">
+                        
+                        Abdullah bin Abbas
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea135">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Alevi el-Haddad = Abdullah bin Alevi el-Haddad&#39;,&#39;97051&#39;,&#39;135&#39;)">
+                        
+                        Abdullah bin Alevi el-Haddad
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea136">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Amir = Abdullah bin Amir&#39;,&#39;362&#39;,&#39;136&#39;)">
+                        
+                        Abdullah bin Amir
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea137">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Cafer = Abdullah bin Cafer&#39;,&#39;98789&#39;,&#39;137&#39;)">
+                        
+                        Abdullah bin Cafer
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea138">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Ebi İshak El-Hadrami = Abdullah bin Ebi İshak El-Hadrami&#39;,&#39;363&#39;,&#39;138&#39;)">
+                        
+                        Abdullah bin Ebi İshak El-Hadrami
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea139">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin el-Mübarek = Abdullah bin al-Mubarak&#39;,&#39;364&#39;,&#39;139&#39;)">
+                        
+                        Abdullah bin el-Mübarek
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea140">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin ez-Zübeyr = Abdullah bin ez-Zübeyr&#39;,&#39;365&#39;,&#39;140&#39;)">
+                        
+                        Abdullah bin ez-Zübeyr
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea141">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Faris el-Maliki = Abdullah bin Faris el-Maliki&#39;,&#39;366&#39;,&#39;141&#39;)">
+                        
+                        Abdullah bin Faris el-Maliki
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea142">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin İbaz = Abdullah bin İbaz&#39;,&#39;76962&#39;,&#39;142&#39;)">
+                        
+                        Abdullah bin İbaz
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea143">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin İsmail el-Haşimi = Abdullah bin İsmail el-Haşimi&#39;,&#39;367&#39;,&#39;143&#39;)">
+                        
+                        Abdullah bin İsmail el-Haşimi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea144">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Mahmud Figani-zade Çorumi = Abdullah bin Mahmud Figani-zade Çorumi&#39;,&#39;75933&#39;,&#39;144&#39;)">
+                        
+                        Abdullah bin Mahmud Figani-zade Çorumi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea145">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Mesud = Abdullah bin Mesud&#39;,&#39;68772&#39;,&#39;145&#39;)">
+                        
+                        Abdullah bin Mesud
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea146">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Muhammed bin Sid el-Batalyevsi = Abdullah bin Muhammed bin Sid el-Batalyevsi&#39;,&#39;98221&#39;,&#39;146&#39;)">
+                        
+                        Abdullah bin Muhammed bin Sid el-Batalyevsi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea147">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Ömer = Abdullah bin Ömer&#39;,&#39;368&#39;,&#39;147&#39;)">
+                        
+                        Abdullah bin Ömer
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea148">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Rıdvan = Abdullah bin Rıdvan&#39;,&#39;68719&#39;,&#39;148&#39;)">
+                        
+                        Abdullah bin Rıdvan
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea149">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Salih el-Mısri = Abdullah bin Salih el-Mısri&#39;,&#39;369&#39;,&#39;149&#39;)">
+                        
+                        Abdullah bin Salih el-Mısri
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea150">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Selam = Abdullah bin Selam&#39;,&#39;66328&#39;,&#39;150&#39;)">
+                        
+                        Abdullah bin Selam
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea151">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Ubeyy = Abdullah bin Ubeyy&#39;,&#39;77666&#39;,&#39;151&#39;)">
+                        
+                        Abdullah bin Ubeyy
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea152">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Yusuf el-Kesteli = Abdullah bin Yusuf el-Kesteli&#39;,&#39;77731&#39;,&#39;152&#39;)">
+                        
+                        Abdullah bin Yusuf el-Kesteli
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea153">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Yusuf ez-Zeyla`i = &#39;,&#39;370&#39;,&#39;153&#39;)">
+                        
+                        Abdullah bin Yusuf ez-Zeyla`i (bknz:Zeyla`i)
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea154">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah bin Zübeyr = Abdullah bin Zübeyr&#39;,&#39;371&#39;,&#39;154&#39;)">
+                        
+                        Abdullah bin Zübeyr
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea155">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Bosnevi = Abdullah Bosnevi&#39;,&#39;372&#39;,&#39;155&#39;)">
+                        
+                        Abdullah Bosnevi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea156">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah ed-Dihlevi = Abdullah Dehlavi&#39;,&#39;99888&#39;,&#39;156&#39;)">
+                        
+                        Abdullah ed-Dihlevi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea157">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Efendi\&#39;nin Rüyaları = Abdullah Efendi\&#39;nin Rüyaları&#39;,&#39;66775&#39;,&#39;157&#39;)">
+                        
+                        Abdullah Efendi\'nin Rüyaları
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea158">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah el-Beytuşi = Abdullah el-Beytuşi&#39;,&#39;87846&#39;,&#39;158&#39;)">
+                        
+                        Abdullah el-Beytuşi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea159">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah el-Buhari = Abdullah al-Bukhari&#39;,&#39;90494&#39;,&#39;159&#39;)">
+                        
+                        Abdullah el-Buhari
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea160">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah el-Ensari el-Herevi = Abdullah el-Ensari el-Herevi&#39;,&#39;92455&#39;,&#39;160&#39;)">
+                        
+                        Abdullah el-Ensari el-Herevi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea161">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah el-Fakihi = Abdullah el-Fakihi&#39;,&#39;105483&#39;,&#39;161&#39;)">
+                        
+                        Abdullah el-Fakihi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea162">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah el-Gazzami = Abdullah al-Gazzami&#39;,&#39;74443&#39;,&#39;162&#39;)">
+                        
+                        Abdullah el-Gazzami
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea163">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah eş-Şebravi = Abdullah eş-Şebravi&#39;,&#39;96611&#39;,&#39;163&#39;)">
+                        
+                        Abdullah eş-Şebravi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea164">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah et-Tai = Abdullah et-Tai&#39;,&#39;89621&#39;,&#39;164&#39;)">
+                        
+                        Abdullah et-Tai
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea165">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah et-Tayyib = Abdullah et-Tayyib&#39;,&#39;79224&#39;,&#39;165&#39;)">
+                        
+                        Abdullah et-Tayyib
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea166">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Eyyübi = Abdullah Eyyübi&#39;,&#39;89359&#39;,&#39;166&#39;)">
+                        
+                        Abdullah Eyyübi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea167">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Halim Efendi = Abdullah Halim Efendi&#39;,&#39;68469&#39;,&#39;167&#39;)">
+                        
+                        Abdullah Halim Efendi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea168">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Hasib = Abdullah Hasib&#39;,&#39;93926&#39;,&#39;168&#39;)">
+                        
+                        Abdullah Hasib
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea169">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Hayyat = Abdullah Hayyat&#39;,&#39;98972&#39;,&#39;169&#39;)">
+                        
+                        Abdullah Hayyat
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea170">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah İbn Ali-yi Nasrullahi = Abdullah İbn Ali-yi Nasrullahi&#39;,&#39;91186&#39;,&#39;170&#39;)">
+                        
+                        Abdullah İbn Ali-yi Nasrullahi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea171">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah İbni Kesir = Abdullah Ibn Kathir&#39;,&#39;374&#39;,&#39;171&#39;)">
+                        
+                        Abdullah İbni Kesir
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea172">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah İbni Şükri Konavi = Abdullah İbni Şükri Konavi&#39;,&#39;375&#39;,&#39;172&#39;)">
+                        
+                        Abdullah İbni Şükri Konavi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea173">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah İbrahim = Abdullah İbrahim&#39;,&#39;98518&#39;,&#39;173&#39;)">
+                        
+                        Abdullah İbrahim
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea174">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah İlahi = Abdullah İlahi&#39;,&#39;376&#39;,&#39;174&#39;)">
+                        
+                        Abdullah İlahi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea175">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Kemal = Abdullah Kemal&#39;,&#39;377&#39;,&#39;175&#39;)">
+                        
+                        Abdullah Kemal
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea176">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Kudsi = Abdullah Kudsi&#39;,&#39;71185&#39;,&#39;176&#39;)">
+                        
+                        Abdullah Kudsi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea177">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Memundi = Abdullah Memundi&#39;,&#39;84468&#39;,&#39;177&#39;)">
+                        
+                        Abdullah Memundi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea178">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah, Muhammed  Abdulhalim = Abdullah, Muhammed  Abdulhalim&#39;,&#39;95921&#39;,&#39;178&#39;)">
+                        
+                        Abdullah, Muhammed  Abdulhalim
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea179">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Münzevi = Abdullah Münzevi&#39;,&#39;378&#39;,&#39;179&#39;)">
+                        
+                        Abdullah Münzevi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea180">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Necib el-Ayıntabi = Abdullah Necib el-Ayıntabi&#39;,&#39;89263&#39;,&#39;180&#39;)">
+                        
+                        Abdullah Necib el-Ayıntabi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea181">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Paşa = Abdullah Pasha&#39;,&#39;101829&#39;,&#39;181&#39;)">
+                        
+                        Abdullah Paşa
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea182">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Paşa yalısı = Abdullah Paşa waterside&#39;,&#39;92838&#39;,&#39;182&#39;)">
+                        
+                        Abdullah Paşa yalısı
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea183">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Ramiz Paşa = Abdullah Ramiz Pasha&#39;,&#39;379&#39;,&#39;183&#39;)">
+                        
+                        Abdullah Ramiz Paşa
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea184">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Refet = Abdullah Refet&#39;,&#39;380&#39;,&#39;184&#39;)">
+                        
+                        Abdullah Refet
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea185">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Safi = Abdullah Safi&#39;,&#39;101748&#39;,&#39;185&#39;)">
+                        
+                        Abdullah Safi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea186">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Salahi Uşakki = Abdullah Salahi Uşakki&#39;,&#39;381&#39;,&#39;186&#39;)">
+                        
+                        Abdullah Salahi Uşakki
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea187">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Sermest = Abdullah Sermest&#39;,&#39;382&#39;,&#39;187&#39;)">
+                        
+                        Abdullah Sermest
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea188">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Seyyidi = Abdullah Seyyidi&#39;,&#39;100143&#39;,&#39;188&#39;)">
+                        
+                        Abdullah Seyyidi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea189">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Sıdkı = Abdullah Sıdki&#39;,&#39;65570&#39;,&#39;189&#39;)">
+                        
+                        Abdullah Sıdkı
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea190">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Tansel, Fevziye = Abdullah Tansel, Fevziye&#39;,&#39;82951&#39;,&#39;190&#39;)">
+                        
+                        Abdullah Tansel, Fevziye
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea191">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Tukay = Abdullah Tukay&#39;,&#39;383&#39;,&#39;191&#39;)">
+                        
+                        Abdullah Tukay
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea192">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah Zühdü = Abdullah Zühdü&#39;,&#39;384&#39;,&#39;192&#39;)">
+                        
+                        Abdullah Zühdü
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea193">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah-el Herari = Abdullah-el Herari&#39;,&#39;96613&#39;,&#39;193&#39;)">
+                        
+                        Abdullah-el Herari
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea194">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullah-ı Rumi = Abdullah-ı Rumi&#39;,&#39;385&#39;,&#39;194&#39;)">
+                        
+                        Abdullah-ı Rumi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+
+	
+	 
+	<tr class="renka">
+	
+		<td align="left" id="TextArea195">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullatif bin Abdullah = Abdullatif bin Abdullah&#39;,&#39;386&#39;,&#39;195&#39;)">
+                        
+                        Abdullatif bin Abdullah
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea196">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullatif el-Bağdadi = Abdullatif el-Bağdadi&#39;,&#39;387&#39;,&#39;196&#39;)">
+                        
+                        Abdullatif el-Bağdadi
+                        
+
+					</a>
+			
+</td>
+
+	
+	 
+		<td align="left" id="TextArea197">
+			
+			
+					<a href="javascript:eklecikar(&#39;Abdullatif Harputi = Abdullatif Harputi&#39;,&#39;388&#39;,&#39;197&#39;)">
+                        
+                        Abdullatif Harputi
+                        
+
+					</a>
+			
+</td>
+
+	</tr>
+	</tbody></table>
+</body></html>
