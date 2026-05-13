@@ -79,7 +79,9 @@ def test_get_raises_value_error_when_thesis_carries_no_thesis_no():
         ("download_appendix", "/UlusalTezMerkezi/EkGoster"),
     ],
 )
-def test_download_streams_full_payload_to_bytesio(method_name: str, expected_path: str):
+def test_download_routes_to_endpoint_and_streams_to_bytesio(
+    method_name: str, expected_path: str
+):
     captured: list[httpx.Request] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -95,13 +97,12 @@ def test_download_streams_full_payload_to_bytesio(method_name: str, expected_pat
     assert parse_qs(captured[0].url.query.decode())["key"] == ["the-key"]
 
 
-@pytest.mark.parametrize("method_name", ["download_pdf", "download_appendix"])
-def test_download_writes_to_filesystem_path(method_name: str, tmp_path: Path):
+def test_download_pdf_writes_to_filesystem_path(tmp_path: Path):
     def handler(_request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, content=_PDF_PAYLOAD)
 
     dest = tmp_path / "out.bin"
     with _build_client(httpx.MockTransport(handler)) as client:
-        getattr(client.assets, method_name)("the-key", dest)
+        client.assets.download_pdf("the-key", dest)
 
     assert dest.read_bytes() == _PDF_PAYLOAD

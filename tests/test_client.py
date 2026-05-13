@@ -1,12 +1,8 @@
 """Tests for `yoktez.client.Client`."""
 
 import httpx
-import pytest
 
-from yoktez.assets import AssetsService
 from yoktez.client import Client
-from yoktez.lookups import LookupsService
-from yoktez.metadata import MetadataService
 from yoktez.search import SearchService
 
 
@@ -17,23 +13,15 @@ def _mock_http_client() -> httpx.Client:
     )
 
 
-@pytest.mark.parametrize(
-    ("attr", "expected_cls"),
-    [
-        ("search", SearchService),
-        ("metadata", MetadataService),
-        ("assets", AssetsService),
-        ("lookups", LookupsService),
-    ],
-)
-def test_sub_service_is_lazy_memoized_and_back_references_parent(
-    attr: str, expected_cls: type
-):
+def test_sub_service_is_lazy_memoized_and_back_references_parent():
+    # One sub-service stands in for all: every sub-service uses the same lazy `_<name>`
+    # cache + `Service(self)` construction in `Client`. A bug there breaks all of them;
+    # testing one is enough.
     with Client(http_client=_mock_http_client()) as client:
-        first = getattr(client, attr)
+        first = client.search
 
-        assert isinstance(first, expected_cls)
-        assert getattr(client, attr) is first  # memoized
+        assert isinstance(first, SearchService)
+        assert client.search is first  # memoized
         assert first.client is client  # back-references parent
 
 

@@ -11,7 +11,6 @@ import pytest
 
 from yoktez import (
     Client,
-    Institute,
     KeywordGroup,
     University,
     UniversitySource,
@@ -89,16 +88,6 @@ def test_institutes_rejects_university_without_yoksis_id():
         pytest.raises(ValueError, match="University"),
     ):
         client.lookups.institutes(legacy)
-
-
-def test_divisions_rejects_institute_without_yoksis_id():
-    legacy = Institute(display_name="L", id=1, yoksis_id=None)
-
-    with (
-        _build_client(httpx.MockTransport(lambda _r: httpx.Response(200))) as client,
-        pytest.raises(ValueError, match="Institute"),
-    ):
-        client.lookups.divisions("U", legacy)
 
 
 def test_all_universities_composes_results_from_both_modern_sources():

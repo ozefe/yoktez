@@ -40,6 +40,8 @@ _PDF_AND_APPENDIX_APPENDIX_KEY = (
             None,
             False,
         ),
+        # EN-variant fixtures intentionally omitted: the classifier regex doesn't read
+        # message language, so the EN fixtures duplicate the TR coverage.
         (
             "under-embargo-tr.html",
             AssetStatus.UNDER_EMBARGO,
@@ -48,18 +50,8 @@ _PDF_AND_APPENDIX_APPENDIX_KEY = (
             _EMBARGO_DATE,
             True,
         ),
-        (
-            "under-embargo-en.html",
-            AssetStatus.UNDER_EMBARGO,
-            None,
-            None,
-            _EMBARGO_DATE,
-            True,
-        ),
         ("no-permit-tr.html", AssetStatus.NO_PERMIT, None, None, None, True),
-        ("no-permit-en.html", AssetStatus.NO_PERMIT, None, None, None, True),
         ("preparing-tr.html", AssetStatus.PREPARING, None, None, None, True),
-        ("preparing-en.html", AssetStatus.PREPARING, None, None, None, True),
     ],
 )
 def test_parse_thesis_assets_classifies_every_wire_state(  # noqa: PLR0913

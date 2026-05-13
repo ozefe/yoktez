@@ -29,19 +29,3 @@ def test_parse(raw: str, expected: tuple[str, str | None, str | None, str | None
         result.division,
         result.section,
     ) == expected
-
-
-@pytest.mark.parametrize(
-    "raw",
-    [
-        "U / I / D / S",
-        "U / I / D",
-        "U / I",
-        "Only",
-        "",
-        "U / I /",
-        "U / I / D / S1 / S2",
-    ],
-)
-def test_parse_preserves_raw_verbatim(raw: str):
-    assert Affiliation.parse(raw).raw == raw

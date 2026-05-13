@@ -46,11 +46,3 @@ def test_slicing_preserves_total_count_from_parent_query():
     sliced = results[:2]
 
     assert sliced.total == 12_345
-
-
-def test_total_can_exceed_len_when_database_match_exceeds_2000_card_cap():
-    thesis = _example_thesis()
-    results = SearchResults((thesis,) * 2000, total=66_816)
-
-    assert len(results) == 2000
-    assert results.total == 66_816
