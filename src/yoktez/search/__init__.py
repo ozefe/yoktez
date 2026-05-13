@@ -24,6 +24,8 @@ if TYPE_CHECKING:
 
 __all__ = ["SearchResults", "SearchService", "Thesis"]
 
+# YOK NTC's web interface doesn't allow year values less than 1900, earlier years are
+# guaranteed bad input and should fail fast client-side rather than reach the wire.
 _MIN_YEAR = 1900
 
 
@@ -36,7 +38,9 @@ class SearchService:
     def recent(self) -> SearchResults:
         """Fetch theses added to YOK NTC in the last 15 days.
 
-        Wraps the "Recently Added" endpoint.
+        Returns:
+            The "Recently Added" feed. The 15-day window is server-fixed and not
+            user-configurable.
         """
         response = self.client.http_client.get(RECENT, params={"islem": "7"})
 
@@ -52,11 +56,19 @@ class SearchService:
     ) -> SearchResults:
         """Run a simple keyword search.
 
-        `term` is the free-text query. `field` scopes which thesis fields to search;
-        `access` narrows by full-text access status; `degree_type` filters by degree
-        level. All enum-shaped args accept the matching `Enum` member, its name (e.g.,
-        `"MASTER"`), or its raw int code -- unknown int codes pass through to YOK NTC
-        unmodified.
+        Args:
+            term: Free-text query.
+            field: Which thesis fields to search.
+            access: Full-text access status filter.
+            degree_type: Degree-level filter.
+
+        Returns:
+            Matching theses.
+
+        Note:
+            All enum-shaped args accept the matching `Enum` member, its name (e.g.
+            `"MASTER"`), or its raw int code -- unknown int codes pass through to YOK
+            NTC unmodified.
         """
         response = self.client.http_client.post(
             SEARCH,
@@ -84,10 +96,17 @@ class SearchService:
     ) -> SearchResults:
         """Run an advanced (multi-term, operator-joined) search.
 
-        `term1` is required; `term2`/`term3` are optional second/third terms. `op1`
-        joins term1 with term2; `op2` joins (term1 OP1 term2) with term3. `match`
-        selects exact-as-written vs. includes-substring; `field` scopes which thesis
-        fields to search.
+        Args:
+            term1: First search term (required).
+            term2: Second term, joined to `term1` by `op1`.
+            term3: Third term, joined to `(term1 op1 term2)` by `op2`.
+            op1: Boolean operator between `term1` and `term2`.
+            op2: Boolean operator between `(term1 op1 term2)` and `term3`.
+            field: Which thesis fields to search.
+            match: `EXACT` matches as written, `INCLUDES` matches substrings.
+
+        Returns:
+            Matching theses.
         """
         response = self.client.http_client.post(
             SEARCH,
@@ -127,11 +146,26 @@ class SearchService:
     ) -> SearchResults:
         """Run a detailed multi-filter search.
 
-        Each filter is independently optional. `university` accepts a `University` or a
-        YOKSIS ID string; `institute` and `division` accept the typed model or the raw
-        numeric wire ID as an `int`. `thesis_display_no` is the human-readable thesis
-        number (the value YOK NTC shows next to `Tez No:`), not the opaque `data-tezno`
-        token.
+        Args:
+            university: A `University`, a YOKSIS ID string, or `None` to omit.
+            institute: An `Institute`, a raw numeric wire ID, or `None` to omit.
+            division: A `Division`, a raw numeric wire ID, or `None` to omit.
+            subject: A `Subject`, a free-text subject string, or `None` to omit.
+            degree_type: Degree-level filter.
+            year_min: Lower bound on defense year (inclusive). Must be `>= 1900`.
+            year_max: Upper bound on defense year (inclusive).
+            access: Full-text access status filter.
+            status: Lifecycle status filter. Defaults to `APPROVED`.
+            title: Title substring filter.
+            language: Language filter.
+            author: Author-name substring filter.
+            supervisor: Supervisor-name substring filter.
+            keyword: Keyword filter.
+            thesis_display_no: Human-readable thesis number (the value YOK NTC shows
+                next to `Tez No:`).
+
+        Returns:
+            Matching theses.
 
         Raises:
             ValueError: `year_min` is set and below `1900`, or `year_min` exceeds
@@ -144,6 +178,9 @@ class SearchService:
             msg = f"year_min ({year_min}) must be <= year_max ({year_max})"
             raise ValueError(msg)
 
+        # Three input shapes per hierarchical filter: typed model (carries display +
+        # numeric id + yoksis id), bare id (display unknown -- send empty string), or
+        # None (filter omitted -- wire expects empty strings or "0").
         if isinstance(university, University):
             uniad = university.display_name
             universite = university.id
@@ -182,6 +219,7 @@ class SearchService:
 
         konu = subject.display.raw if isinstance(subject, Subject) else (subject or "")
 
+        # Wire field names are Turkish.
         response = self.client.http_client.post(
             SEARCH,
             data={

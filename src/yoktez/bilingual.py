@@ -5,6 +5,8 @@ from typing import Self
 
 __all__ = ["Bilingual"]
 
+# YOK NTC concatenates bilingual halves with a literal "=" surrounded by whitespace; the
+# convention is stable across all bilingual fields (subjects, keywords, ...).
 _SEPARATOR = "="
 
 
@@ -30,10 +32,16 @@ class Bilingual:
     def parse(cls, raw_text: str) -> Self:
         """Parse a `"Turkish = English"` string into a `Bilingual`.
 
-        Splits on the first occurrence of `_SEPARATOR` only; any further separators are
-        kept in the English half. When no separator is present the entire input becomes
-        the Turkish half and `en` is `None`. Surrounding whitespace on each half is
-        stripped; the original input is preserved verbatim in `raw`.
+        Args:
+            raw_text: Source string. Preserved verbatim in `raw`.
+
+        Returns:
+            A `Bilingual` with whitespace-stripped halves.
+
+        Note:
+            Splits on the first separator only; further occurrences stay in the English
+            half (e.g., a term like `"X = Y = Z"` becomes `tr="X"`, `en="Y = Z"`). When
+            no separator is present the entire input becomes `tr` and `en` is `None`.
         """
         tr, sep, en = raw_text.partition(_SEPARATOR)
 

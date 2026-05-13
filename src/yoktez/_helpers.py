@@ -11,9 +11,17 @@ __all__ = ["resolve_yoksis_id"]
 def resolve_yoksis_id(obj: University | Institute | str) -> str:
     """Resolve `obj` to a YOKSIS ID string usable as a `uniKod`/`ensKod` query value.
 
-    Strings pass through unchanged. Model instances must carry a non-`None` `yoksis_id`
-    because we can only drive hierarchical lookups via `yoksis_id`. The call raises
-    `ValueError` rather than silently issuing a malformed request.
+    Args:
+        obj: A `University`, `Institute`, or a raw YOKSIS ID string. Strings pass
+            through unchanged.
+
+    Returns:
+        The YOKSIS ID string.
+
+    Raises:
+        ValueError: `obj` is a model whose `yoksis_id` is `None`. Hierarchical lookups
+            require a non-`None` value; failing here keeps malformed requests off the
+            wire.
     """
     if isinstance(obj, str):
         return obj

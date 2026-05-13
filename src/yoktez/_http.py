@@ -30,7 +30,15 @@ _DEFAULT_RETRIES = 3
 
 
 def default_transport(retries: int = _DEFAULT_RETRIES) -> httpx.HTTPTransport:
-    """Build the default `httpx.HTTPTransport` with connection-level retries."""
+    """Build the default `httpx.HTTPTransport` with connection-level retries.
+
+    Args:
+        retries: Connection-level retry count. httpx retries only `ConnectError` and
+            `ConnectTimeout`; status codes are not retried.
+
+    Returns:
+        A fresh transport ready to be passed into `httpx.Client(transport=...)`.
+    """
     return httpx.HTTPTransport(retries=retries)
 
 

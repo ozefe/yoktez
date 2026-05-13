@@ -39,8 +39,11 @@ class ThesisType(IntEnum):
     def from_display(cls, name: str) -> Self:
         """Resolve a Turkish wire-form display name to a `ThesisType` member.
 
-        `name` is the value found in YOK NTC responses (Turkish only). `from_display`
-        never emits `ALL` -- that sentinel is request-side only.
+        Args:
+            name: Turkish display string as it appears in YOK NTC responses.
+
+        Returns:
+            The matching member. Never `ALL` -- that sentinel is request-side only.
 
         Raises:
             ValueError: `name` is not a known Turkish display string.
@@ -69,7 +72,7 @@ class ThesisLanguage(IntEnum):
     """Language of a thesis.
 
     Note:
-        Codes 22-25, 38, and 40 are gaps in the YOK NTC namespace per and are not
+        Codes 22-25, 38, and 40 are gaps in the YOK NTC namespace and are not
         represented here.
     """
 
@@ -122,13 +125,16 @@ class ThesisLanguage(IntEnum):
     def from_display(cls, name: str) -> Self:
         """Resolve a Turkish wire-form language name to a `ThesisLanguage` member.
 
-        `name` is the value found in YOK NTC responses (Turkish only). The map covers
-        the known languages; unmapped names raise `ValueError` so the parser layer can
-        wrap it as `ParseError` and surface the missing entry. `from_display` never
-        emits `ALL` -- that sentinel is request-side only.
+        Args:
+            name: Turkish display string as it appears in YOK NTC responses.
+
+        Returns:
+            The matching member. Never `ALL` -- that sentinel is request-side only.
 
         Raises:
-            ValueError: `name` is not a known Turkish language display string.
+            ValueError: `name` is not a known Turkish display string. The parser layer
+                wraps this as `ParseError` so a previously-unseen language label
+                surfaces as a parser break rather than silent data loss.
         """
         try:
             return _THESIS_LANGUAGE_BY_DISPLAY[name]  # pyright: ignore[reportReturnType]
@@ -219,18 +225,23 @@ def coerce[E: StrEnum](enum_cls: type[E], value: E | str) -> str: ...
 def coerce(enum_cls: type[Enum], value: object) -> int | str:
     """Resolve `value` to its YOK NTC wire-format representation.
 
-    Behavior:
-        - If `value` is an instance of `enum_cls`, return its `.value`.
-        - For `IntEnum` subclasses: accept `int` or digit-string and either map to a
-          known member's value or pass the int through unchanged (tolerates new YOK NTC
-          codes not yet enumerated here). Member names are accepted as well.
-        - For `StrEnum` subclasses: accept the member name or the wire string. Unknown
-          strings raise `ValueError`. Typos in small enum sets like `KeywordGroup` must
-          fail loudly rather than silently producing broken requests.
+    Args:
+        enum_cls: Target enum. Must be an `IntEnum` or `StrEnum` subclass.
+        value: Source value. If a member of `enum_cls`, its `.value` is returned. For
+            `IntEnum` targets, also accepts a member name, a digit string, or a raw
+            `int` -- unknown integers pass through unchanged so new YOK NTC codes still
+            reach the wire. For `StrEnum` targets, accepts the member name or the wire
+            string.
+
+    Returns:
+        Wire representation: `int` for `IntEnum` targets, `str` for `StrEnum` targets.
 
     Raises:
         TypeError: `value` is not an `Enum`, `int`, or `str`.
-        ValueError: `value` cannot be mapped to a member and passthrough does not apply.
+        ValueError: `value` cannot be mapped to a member and passthrough does not apply
+            (e.g., an unknown `StrEnum` string -- typos in small enum sets like
+            `KeywordGroup` must fail loudly rather than silently produce broken
+            requests).
     """
     if isinstance(value, enum_cls):
         return value.value

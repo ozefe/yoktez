@@ -55,9 +55,13 @@ def parse_universities_json(
 ) -> list[University]:
     """Map the modern JSON payload to `University` records.
 
-    `source` is supplied by the caller (the service knows whether the batch came from
-    the TR or INT endpoint) and stamped onto every record so callers downstream can
-    issue correctly-scoped detail searches without re-querying.
+    Args:
+        data: Deserialized JSON array.
+        source: Endpoint origin. Stamped onto every record so a downstream detail search
+            can re-issue with the correct scope without re-querying the lookup.
+
+    Returns:
+        One `University` per JSON entry, in input order.
 
     Note:
         The modern endpoint always carries a non-`None` `yoksisId`, but the model still
@@ -79,13 +83,16 @@ def parse_radio_input_list(
 ) -> list[tuple[str, int, str | None]]:
     """Extract `(ad, kod, yoksisId)` triplets from a radio-list HTML fragment.
 
-    Used by the modern AJAX endpoints (`tarama.jsp?ajax=getEnstitu|getABD|...`): each
-    option is an `<input name="{name_attr}" ad="..." kod="..." yoksisId="...">`.
+    Args:
+        markup: Raw HTML body from a modern AJAX endpoint.
+        name_attr: The `name=` attribute to filter on. Inputs with other names are
+            skipped.
 
-    `yoksisId` is returned as `None` when the attribute is missing entirely (e.g., the
-    divisions endpoint never carries it) or when it equals the literal string `"null"`
-    (the bulk endpoints encode legacy-source entries that way). Only inputs whose
-    `name=` matches `name_attr` are considered.
+    Returns:
+        Triplets in document order. `yoksisId` is `None` when the attribute is missing
+        entirely (e.g., the divisions endpoint never carries it) or when it equals the
+        literal string `"null"` (the bulk endpoints encode legacy-source entries that
+        way).
     """
     soup = BeautifulSoup(markup, "lxml")
     triplets: list[tuple[str, int, str | None]] = []
@@ -109,15 +116,16 @@ def parse_radio_input_list(
 def parse_eklecikar_list(markup: str) -> list[tuple[str, int]]:
     r"""Extract `(name, id)` pairs from a legacy `eklecikar()` HTML fragment.
 
-    Used by the old `*Ekle.jsp` endpoints and `SearchDizin`: the data lives in
-    `<a href="javascript:eklecikar('NAME','ID','SEQ')">` anchors. Regex-based over the
-    raw text rather than BS4-walking, because the keyword catalog dump can run to tens
-    of MB and BS4 is roughly two orders of magnitude slower than the regex for no useful
-    gain (the data of interest only lives in `href` attrs).
+    Args:
+        markup: Raw HTML body from a legacy endpoint.
 
-    Handles both quote styles in one pass (bare `'` and HTML-encoded `&#39;`) and
-    correctly skips JS-escaped apostrophes embedded inside names (e.g.
-    `A Clergyman\'s Daughter`).
+    Returns:
+        Pairs in document order.
+
+    Note:
+        Regex-based over raw text rather than BS4-walking: the keyword catalog dump can
+        reach tens of MB, where BS4 is roughly two orders of magnitude slower than the
+        regex for no useful gain (only `href` attrs carry the payload).
     """
     pairs: list[tuple[str, int]] = []
 
@@ -134,9 +142,16 @@ def parse_eklecikar_list(markup: str) -> list[tuple[str, int]]:
 def _flat(value: str | list[str] | None) -> str | None:
     """Reduce a BS4 attribute value to a plain `str | None`.
 
-    BS4 returns a list for HTML multi-valued attributes like `class`; the YOK NTC radio
-    inputs never use multi-valued attrs for `ad` / `kod` / `yoksisId`, so the first
-    element is the truthful value when a list does appear.
+    Args:
+        value: BS4-returned attribute value.
+
+    Returns:
+        `None` if missing or an empty list, otherwise the string value.
+
+    Note:
+        BS4 returns a list for HTML multi-valued attributes like `class`. YOK NTC radio
+        inputs never use multi-valued attrs for `ad`/`kod`/`yoksisId`, so the first
+        element is the truthful value when a list does appear.
     """
     if value is None:
         return None

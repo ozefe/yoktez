@@ -38,8 +38,14 @@ _TEZ_NO_PREFIX = re.compile(r"^\s*Tez\s*No\s*:\s*", re.IGNORECASE)
 def parse_search_page(html: str) -> SearchResults:
     """Parse a YOK NTC search-results page into a `SearchResults`.
 
+    Args:
+        html: Raw HTML body returned by the search endpoint.
+
+    Returns:
+        Parsed results in document order.
+
     Raises:
-        ParseError: the `referenceData` script block is missing or invalid JSON, a
+        ParseError: The `referenceData` script block is missing or invalid JSON, a
             result-card has no matching JSON entry, or a `from_display` lookup misses
             (e.g., a previously-unseen Turkish degree type or language label arrived on
             the wire).

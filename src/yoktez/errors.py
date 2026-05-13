@@ -32,6 +32,9 @@ class ThesisUnavailableError(YoktezError):
 
     Concrete subclasses (`ThesisUnderEmbargoError`, `ThesisNoPermitError`,
     `ThesisPreparingError`) narrow the cause.
+
+    Attributes:
+        info_message: The user-facing reason text as surfaced by YOK NTC.
     """
 
     def __init__(self, *, info_message: str) -> None:
@@ -43,7 +46,9 @@ class ThesisUnavailableError(YoktezError):
 class ThesisUnderEmbargoError(ThesisUnavailableError):
     """Raised when a thesis is under author-requested embargo.
 
-    The full text becomes accessible after `restricted_until`.
+    Attributes:
+        info_message: The user-facing reason text as surfaced by YOK NTC.
+        restricted_until: Date after which the full text becomes accessible.
     """
 
     def __init__(self, *, info_message: str, restricted_until: dt.date) -> None:

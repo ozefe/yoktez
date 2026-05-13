@@ -30,7 +30,16 @@ __all__ = [
 
 @dataclass(frozen=True, slots=True)
 class University:
-    """A university (Turkish or international) known to the YOK NTC."""
+    """A university (Turkish or international) known to the YOK NTC.
+
+    Attributes:
+        display_name: Human-readable name in Turkish or English.
+        id: The opaque Base64-like `kod` from the modern JSON endpoint.
+        yoksis_id: Hierarchical lookup token; `None` for records sourced from legacy
+            bulk endpoints.
+        source: The endpoint origin (`TR` or `INT`), preserved so detail searches can
+            re-issue with the correct scope without re-querying the lookup.
+    """
 
     display_name: str
     id: str
@@ -40,7 +49,14 @@ class University:
 
 @dataclass(frozen=True, slots=True)
 class Institute:
-    """An institute under a university."""
+    """An institute under a university.
+
+    Attributes:
+        display_name: Human-readable Turkish name.
+        id: Numeric wire ID.
+        yoksis_id: Hierarchical lookup token; `None` when sourced from a legacy bulk
+            endpoint that omits it.
+    """
 
     display_name: str
     id: int
@@ -49,7 +65,12 @@ class Institute:
 
 @dataclass(frozen=True, slots=True)
 class Division:
-    """A division under an institute."""
+    """A division under an institute.
+
+    Attributes:
+        display_name: Human-readable Turkish name.
+        id: Numeric wire ID.
+    """
 
     display_name: str
     id: int
@@ -57,7 +78,13 @@ class Division:
 
 @dataclass(frozen=True, slots=True)
 class Subject:
-    """A subject classifier with bilingual display."""
+    """A subject classifier with bilingual display.
+
+    Attributes:
+        display: Parsed bilingual name. The raw `"Turkish = English"` form is preserved
+            on `display.raw`.
+        id: Numeric wire ID.
+    """
 
     display: Bilingual
     id: int
@@ -65,7 +92,14 @@ class Subject:
 
 @dataclass(frozen=True, slots=True)
 class Keyword:
-    """A keyword with bilingual display and an optional academic group."""
+    """A keyword with bilingual display and an optional academic group.
+
+    Attributes:
+        display: Parsed bilingual name.
+        id: Numeric wire ID.
+        group: Academic group when the fetch was scoped to a single group; `None` when
+            fetched without a group filter.
+    """
 
     display: Bilingual
     id: int

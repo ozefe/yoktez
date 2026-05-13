@@ -64,6 +64,8 @@ class Client:
 
             self._owns_http = False
 
+        # Sub-services hold a back-reference to this Client; eager construction would
+        # force every import path even when only one service is used.
         self._search: SearchService | None = None
         self._metadata: MetadataService | None = None
         self._assets: AssetsService | None = None
@@ -104,7 +106,12 @@ class Client:
         return self._lookups
 
     def close(self) -> None:
-        """Close the underlying `httpx.Client` (only when owned)."""
+        """Close the underlying `httpx.Client` and release its connection pool.
+
+        Note:
+            No-op when the HTTP client was injected via `http_client=` (ownership stays
+            with the caller) or when `close()` has already run.
+        """
         if self._closed:
             return
 
@@ -116,9 +123,12 @@ class Client:
     def __enter__(self) -> Self:
         """Bind this `Client` to the `with` statement variable.
 
-        Returns `self` so that `with Client() as c: ...` makes the client available as
-        `c`. No I/O happens here: the underlying `httpx.Client` was already constructed
-        (or injected) in `__init__`.
+        Returns:
+            `self`, so `with Client() as c: ...` makes the client available as `c`.
+
+        Note:
+            No I/O happens here: the underlying `httpx.Client` was already constructed
+            (or injected) in `__init__`.
         """
         return self
 
@@ -128,10 +138,12 @@ class Client:
         exc: BaseException | None,
         tb: TracebackType | None,
     ) -> None:
-        """Close the owned `httpx.Client` and release its connection pool.
+        """Delegate to `close()` on `with`-block exit.
 
-        Does nothing if the underlying HTTP client was injected via the `http_client`
-        constructor parameter (ownership stays with the caller). Exceptions raised
-        inside the `with` block propagate unchanged: we never swallow them.
+        Note:
+            Does nothing if the underlying HTTP client was injected via the
+            `http_client` constructor parameter (ownership stays with the caller).
+            Exceptions raised inside the `with` block propagate unchanged: we never
+            swallow them.
         """
         self.close()

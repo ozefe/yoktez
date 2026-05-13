@@ -13,7 +13,26 @@ __all__ = ["SearchResults", "Thesis"]
 
 @dataclass(frozen=True, slots=True)
 class Thesis:
-    """A single thesis as it appears on a YOK NTC search result page."""
+    """A single thesis as it appears on a YOK NTC search result page.
+
+    Attributes:
+        registration_no: Opaque `kayitNo` token; pair with `thesis_no` to address
+            metadata/asset endpoints.
+        thesis_no: Opaque `data-tezno` token from the result card. `None` only on
+            malformed cards.
+        display_no: Human-readable thesis number (the value shown next to `Tez No:`);
+            `None` when the card omits it.
+        title: Original-language title; `None` when the card omits it.
+        title_translated: Translated title; `None` when no translation is present.
+        author: Author name as displayed; `None` when omitted.
+        year: Defense year; `None` when omitted or unparsable.
+        subject_raw: Raw subject string from the result card; bilingual parsing is left
+            to the caller (subjects can be multi-valued and comma-separated).
+        degree_type: Resolved academic degree level.
+        language: Resolved thesis language.
+        affiliation_raw: Raw institutional affiliation string (university / institute
+            / division hierarchy). Parsing is left to the caller.
+    """
 
     registration_no: str
     thesis_no: str | None
@@ -30,7 +49,11 @@ class Thesis:
 
 @dataclass(frozen=True, slots=True)
 class SearchResults:
-    """Immutable, sliceable wrapper over a sequence of `Thesis`."""
+    """Immutable, sliceable wrapper over a sequence of `Thesis`.
+
+    Attributes:
+        items: The result theses in result-page order.
+    """
 
     items: tuple[Thesis, ...]
 
