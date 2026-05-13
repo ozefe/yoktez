@@ -18,6 +18,7 @@ def test_parses_a_full_page_of_results_from_search_simple_wire_shape():
     results = parse_search_page((FIXTURES / "results-many.html").read_text("utf-8"))
 
     assert len(results) == 10
+    assert results.total == 66_816
     assert all(isinstance(t.degree_type, ThesisType) for t in results)
     assert all(isinstance(t.language, ThesisLanguage) for t in results)
     assert all(t.registration_no for t in results)
@@ -27,6 +28,7 @@ def test_parses_a_single_result_from_search_detail_wire_shape():
     results = parse_search_page((FIXTURES / "results-single.html").read_text("utf-8"))
 
     assert len(results) == 1
+    assert results.total == 1
 
 
 def test_empty_reference_data_yields_zero_results():
@@ -37,7 +39,32 @@ def test_empty_reference_data_yields_zero_results():
         "</body></html>"
     )
 
-    assert len(parse_search_page(html)) == 0
+    results = parse_search_page(html)
+    assert len(results) == 0
+    assert results.total == 0
+
+
+def test_total_strips_turkish_thousand_separator():
+    html = (
+        "<html><body>"
+        "<div class='warning-text'>Arama sonucunda  1.234.567 kayıt bulundu.</div>"
+        "<div id='results-body'></div>"
+        "<script>const referenceData = {};</script>"
+        "</body></html>"
+    )
+
+    assert parse_search_page(html).total == 1_234_567
+
+
+def test_total_defaults_to_zero_when_warning_block_absent():
+    html = (
+        "<html><body>"
+        "<div id='results-body'></div>"
+        "<script>const referenceData = {};</script>"
+        "</body></html>"
+    )
+
+    assert parse_search_page(html).total == 0
 
 
 def test_missing_reference_data_block_raises_parse_error():

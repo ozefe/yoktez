@@ -34,6 +34,13 @@ _TRAILING_COMMA = re.compile(r",(\s*})")
 
 _TEZ_NO_PREFIX = re.compile(r"^\s*Tez\s*No\s*:\s*", re.IGNORECASE)
 
+# Captures the database-wide match total from the `.warning-text` advisory block.
+# Format: "Arama sonucunda  <N> kayıt bulundu." where <N> uses "." as the Turkish
+# thousand-separator (e.g. "66.816" == 66816). The optional follow-up line
+# "2.000 tanesi görüntülenmektedir." reports the 2000-card cap and is ignored: the cap
+# is a library-side invariant.
+_RESULT_TOTAL = re.compile(r"Arama\s+sonucunda\s+([\d.]+)\s+kayıt\s+bulundu")
+
 
 def parse_search_page(html: str) -> SearchResults:
     """Parse a YOK NTC search-results page into a `SearchResults`.
@@ -54,11 +61,22 @@ def parse_search_page(html: str) -> SearchResults:
     soup = BeautifulSoup(html, "lxml")
 
     return SearchResults(
-        tuple(
+        items=tuple(
             _result_card_to_thesis(card, reference_data)
             for card in soup.select("div.result-card[data-index]")
-        )
+        ),
+        total=_extract_total(html),
     )
+
+
+def _extract_total(html: str) -> int:
+    match = _RESULT_TOTAL.search(html)
+    if match is None:
+        # Advisory block is only emitted when the server has something to report; absent
+        # block in practice means an empty result set.
+        return 0
+
+    return int(match.group(1).replace(".", ""))
 
 
 def _extract_reference_data(html: str) -> dict[str, dict[str, dict[str, str]]]:

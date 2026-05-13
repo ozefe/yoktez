@@ -21,7 +21,7 @@ def _example_thesis() -> Thesis:
 
 def test_search_results_supports_len_iter_and_int_indexing():
     thesis = _example_thesis()
-    results = SearchResults((thesis, thesis, thesis))
+    results = SearchResults((thesis, thesis, thesis), total=3)
 
     assert len(results) == 3
     assert list(results) == [thesis, thesis, thesis]
@@ -31,9 +31,26 @@ def test_search_results_supports_len_iter_and_int_indexing():
 
 def test_search_results_slicing_returns_a_new_search_results():
     thesis = _example_thesis()
-    results = SearchResults((thesis, thesis, thesis))
+    results = SearchResults((thesis, thesis, thesis), total=3)
 
     sliced = results[:2]
 
     assert isinstance(sliced, SearchResults)
     assert len(sliced) == 2
+
+
+def test_slicing_preserves_total_count_from_parent_query():
+    thesis = _example_thesis()
+    results = SearchResults((thesis, thesis, thesis), total=12_345)
+
+    sliced = results[:2]
+
+    assert sliced.total == 12_345
+
+
+def test_total_can_exceed_len_when_database_match_exceeds_2000_card_cap():
+    thesis = _example_thesis()
+    results = SearchResults((thesis,) * 2000, total=66_816)
+
+    assert len(results) == 2000
+    assert results.total == 66_816

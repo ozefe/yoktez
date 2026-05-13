@@ -52,10 +52,15 @@ class SearchResults:
     """Immutable, sliceable wrapper over a sequence of `Thesis`.
 
     Attributes:
-        items: The result theses in result-page order.
+        items: The result theses in result-page order. Capped at 2,000 by YOK NTC.
+        total: Number of theses in the YOK NTC database matching the query. May exceed
+            `len(items)` when the database-wide total exceeds the 2000-card cap; in that
+            case the caller must narrow the query (additional filters, tighter year
+            range, ...) to retrieve the remainder.
     """
 
     items: tuple[Thesis, ...]
+    total: int
 
     def __len__(self) -> int:
         """Return the number of results."""
@@ -72,6 +77,8 @@ class SearchResults:
     def __getitem__(self, key: int | slice) -> Thesis | SearchResults:
         """Index by `int` for a single `Thesis`; slice for a new `SearchResults`."""
         if isinstance(key, slice):
-            return SearchResults(self.items[key])
+            # Slicing yields a window into the same query; `total` describes the
+            # underlying match set and is preserved verbatim.
+            return SearchResults(self.items[key], total=self.total)
 
         return self.items[key]
