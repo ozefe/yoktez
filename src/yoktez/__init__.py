@@ -31,11 +31,13 @@ from yoktez.lookups import (
     Subject,
     University,
 )
+from yoktez.metadata import Affiliation, References, ThesisMetadata
 from yoktez.search import SearchResults, Thesis
 
 __all__ = [
     "AccessType",
     "AdvancedOperator",
+    "Affiliation",
     "AssetStatus",
     "Bilingual",
     "Client",
@@ -47,12 +49,14 @@ __all__ = [
     "KeywordLanguage",
     "MatchType",
     "ParseError",
+    "References",
     "SearchField",
     "SearchResults",
     "Section",
     "Subject",
     "Thesis",
     "ThesisLanguage",
+    "ThesisMetadata",
     "ThesisNoPermitError",
     "ThesisPreparingError",
     "ThesisStatus",
