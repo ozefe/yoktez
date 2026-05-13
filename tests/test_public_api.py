@@ -24,6 +24,7 @@ EXPECTED_PUBLIC_NAMES: frozenset[str] = frozenset(
         "Section",
         "Subject",
         "Thesis",
+        "ThesisAssets",
         "ThesisLanguage",
         "ThesisMetadata",
         "ThesisNoPermitError",

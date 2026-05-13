@@ -1,4 +1,5 @@
 from yoktez.__about__ import __version__
+from yoktez.assets import ThesisAssets
 from yoktez.bilingual import Bilingual
 from yoktez.client import Client
 from yoktez.enums import (
@@ -55,6 +56,7 @@ __all__ = [
     "Section",
     "Subject",
     "Thesis",
+    "ThesisAssets",
     "ThesisLanguage",
     "ThesisMetadata",
     "ThesisNoPermitError",
