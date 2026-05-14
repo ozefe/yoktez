@@ -3,28 +3,25 @@
 __pycache__/
 *.py[cod]
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-
 # Environments
-.env
 .venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
 # ruff
 .ruff_cache/
 
 # PyTest
 .pytest_cache
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Build / Dist
+build/
+dist/
+*.egg-info/
 
 ### AI Stuff ###
 # Claude Code

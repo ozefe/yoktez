@@ -13,7 +13,7 @@ license-files = ["LICENSE"]
 authors = [{ name = "Efe Özyay", email = "hi@efe.cv" }]
 keywords = ["yoktez", "tez", "thesis", "turkey"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "Natural Language :: English",
@@ -48,14 +48,39 @@ dev = [
 packages = ["src/yoktez"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/yoktez", "tests", "README.md", "LICENSE", "pyproject.toml"]
+include = [
+    "src/yoktez",
+    "examples",
+    "tests",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-testpaths  = ["tests"]
+testpaths = ["tests"]
 pythonpath = ["src"]
-addopts    = ["-ra", "--strict-markers", "--strict-config", "-m", "not live"]
-markers    = ["live: hits the real YOK NTC network (opt-in via `pytest -m live`)"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "-m",
+    "not live",
+    "--cov=yoktez",
+    "--cov-report=term-missing",
+    "--cov-fail-under=90",
+]
+markers = ["live: hits the real YOK NTC network (opt-in via `pytest -m live`)"]
+
+[tool.coverage.run]
+source = ["src/yoktez"]
+branch = true
+
+[tool.coverage.report]
+fail_under   = 90
+show_missing = true
+skip_covered = false
 
 [tool.pyright]
 include                = ["src", "tests"]
@@ -132,8 +157,4 @@ convention = "google"
     "D",      # example scripts explain themselves in prose, not docstrings
     "T201",   # print() is the output channel
     "ERA001", # commented-out code may illustrate alternative usage
-]
-"scripts/**/*.py" = [
-    "INP001", # scripts/ is not a package
-    "D",      # one-off scripts explain themselves in prose at the top
 ]
